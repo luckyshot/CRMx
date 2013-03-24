@@ -135,13 +135,35 @@ REST API
 		<tr>
 			<td>/login/:pass</td>
 			<td>GET<br><pre>pass (string)</pre></td>
-			<td>JSON</td>
+			<td>(Redirect to <code>/</code>)</td>
 			<td>On success redirects to <code>/</code>, on fail shows a message</td>
 		</tr>
 		<tr>
 			<td>/search/:q</td>
 			<td>GET<br><pre>q (string)</pre></td>
-			<td>JSON</td>
+			<td>JSON<br><pre>[
+  {
+    "id":"46",
+    "name":"Richard",
+    "form":{
+      "title":"CEO",
+      "group":"London",
+      "type":"Provider",
+      "email":"",
+      // ...
+    }
+  },{
+    "id":"37",
+    "name":"Peter",
+    "form":{
+      "title":"Director",
+      "group":"London",
+      "type":"-",
+      "email":"",
+      // ...
+    }
+  }
+]</pre></td>
 			<td>Searches people for that query and returns a JSON array.</td>
 		</tr>
 		<tr>
@@ -161,7 +183,7 @@ REST API
     {
       "user":"Xavi Esteve",
       "date":"2013-03-24T16:03:19+00:00",
-      "text":"Agreed on the small deal, call back in a few days"
+      "text":"..."
     }
   ],
   "created":"1364140289",
