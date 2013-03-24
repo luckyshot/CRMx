@@ -147,11 +147,26 @@ REST API
 		<tr>
 			<td>/get/:id</td>
 			<td>GET<br><pre>id (string)</pre></td>
-			<td>JSON<br><pre>id
-name
-updated
-form
-comments</pre></td>
+			<td>JSON<br><pre>{
+  "id":"46",
+  "name":"Richard",
+  "form":{
+    "title":"CEO",
+    "group":"London",
+    "type":"Provider",
+    "email":"",
+    // ...
+  },
+  "comments":[
+    {
+      "user":"Xavi Esteve",
+      "date":"2013-03-24T16:03:19+00:00",
+      "text":"Agreed on the small deal, call back in a few days"
+    }
+  ],
+  "created":"1364140289",
+  "updated":"1364140289"
+}</pre></td>
 			<td>You can pass an ID or a name, returns results.</td>
 		</tr>
 		<tr>
