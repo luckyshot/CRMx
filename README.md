@@ -116,13 +116,54 @@ Note: Values in select dropdowns that are "<code>-</code>" are not added to the 
 REST API
 ---------------
 
-|	URI	|	Request	|	Response|	Output	|
-|	/				|	GET		|	HTML		|	The home page in HTML format (including the default people and form JSON lists embedded to save server requests). |
-|	/login/:pass	|	GET		|	JSON	|	On success redirects to Home, on fail shows a message |
-|	/search/:q		|	GET		|	JSON	|	Searches people for that query and returns a JSON array. |
-|	/get:id			|	GET		|	JSON		|	You can pass an ID or a name, returns results. |
-|	/save			|	POST		|	JSON		|	Pass the id of the person. |
-|	/delete			|	DELETE		|	JSON		|	Pass the id of the person. |
+<table>
+	<thead>
+		<tr>
+			<th>URI</th>
+			<th>Request</th>
+			<th>Response</th>
+			<th>Output</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>/</td>
+			<td>GET</td>
+			<td>HTML</td>
+			<td>The home page in HTML format (including the default people and form JSON lists embedded to save server requests).</td>
+		</tr>
+		<tr>
+			<td>/login/:pass</td>
+			<td>GET</td>
+			<td>JSON</td>
+			<td>On success redirects to Home, on fail shows a message</td>
+		</tr>
+		<tr>
+			<td>/search/:q</td>
+			<td>GET</td>
+			<td>JSON</td>
+			<td>Searches people for that query and returns a JSON array.</td>
+		</tr>
+		<tr>
+			<td>/get:id</td>
+			<td>GET</td>
+			<td>JSON</td>
+			<td>You can pass an ID or a name, returns results.</td>
+		</tr>
+		<tr>
+			<td>/save</td>
+			<td>POST</td>
+			<td>JSON</td>
+			<td>Pass the id of the person.</td>
+		</tr>
+		<tr>
+			<td>/delete</td>
+			<td>DELETE</td>
+			<td>JSON</td>
+			<td>Pass the id of the person.</td>
+		</tr>
+	</tbody>
+</table>
 
 
 
