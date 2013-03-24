@@ -10,12 +10,10 @@ There is no Settings menu or user accounts, all is done in PHP variables (like S
 Technology
 ---------------
 
-- Limonade PHP micro-framework
-- jQuery
+- Limonade PHP micro-framework (inc. custom MySQL <i>lemon</i>)
 - MySQL
-- JSON
-- LESS
-- Twitter Bootstrap
+- JavaScript / jQuery / JSON
+- Twitter Bootstrap (and LESS)
 
 
 
@@ -118,45 +116,14 @@ Note: Values in select dropdowns that are "<code>-</code>" are not added to the 
 REST API
 ---------------
 
-### / (GET)
+|	URI	|	Request	|	Response|	Output	|
+|	/				|	GET		|	HTML		|	The home page in HTML format (including the default people and form JSON lists embedded to save server requests). |
+|	/login/:pass	|	GET		|	JSON	|	On success redirects to Home, on fail shows a message |
+|	/search/:q		|	GET		|	JSON	|	Searches people for that query and returns a JSON array. |
+|	/get:id			|	GET		|	JSON		|	You can pass an ID or a name, returns results. |
+|	/save			|	POST		|	JSON		|	Pass the id of the person. |
+|	/delete			|	DELETE		|	JSON		|	Pass the id of the person. |
 
-Request: <code>GET</code>
-Output: HTML
-
-Outputs the home page in HTML format (including the default people and form JSON lists embedded to save server requests).
-
-
-### /login/:pass
-
-Request: <code>GET</code>
-Output: On success redirects to Home, on fail shows a message
-
-
-### /search/:q
-
-Request: <code>GET</code>
-Output: JSON
-
-Searches people for that query and returns a JSON array.
-
-### /get:id
-
-Request: <code>GET</code>
-Output: JSON
-
-You can pass an ID or a name, returns results.
-
-
-### /save
-
-Request: <code>POST</code>
-Output: JSON
-
-
-### /delete
-
-Request: <code>DELETE</code>
-Output: JSON
 
 
 #### Status types
