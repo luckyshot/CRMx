@@ -134,31 +134,31 @@ REST API
 		</tr>
 		<tr>
 			<td>/login/:pass</td>
-			<td>GET</td>
+			<td>GET<br><pre>pass = string</pre></td>
 			<td>JSON</td>
 			<td>On success redirects to Home, on fail shows a message</td>
 		</tr>
 		<tr>
 			<td>/search/:q</td>
-			<td>GET</td>
+			<td>GET<br><pre>q = string</pre></td>
 			<td>JSON</td>
 			<td>Searches people for that query and returns a JSON array.</td>
 		</tr>
 		<tr>
-			<td>/get:id</td>
-			<td>GET</td>
+			<td>/get/:id</td>
+			<td>GET<br><pre>id = string</pre></td>
 			<td>JSON</td>
 			<td>You can pass an ID or a name, returns results.</td>
 		</tr>
 		<tr>
 			<td>/save</td>
-			<td>POST</td>
+			<td>POST<br><pre>id (integer)</pre></td>
 			<td>JSON</td>
 			<td>Pass the id of the person.</td>
 		</tr>
 		<tr>
 			<td>/delete</td>
-			<td>DELETE</td>
+			<td>DELETE<br><pre>id (integer)</pre></td>
 			<td>JSON</td>
 			<td>Pass the id of the person.</td>
 		</tr>
