@@ -134,20 +134,24 @@ REST API
 		</tr>
 		<tr>
 			<td>/login/:pass</td>
-			<td>GET<br><pre>pass = string</pre></td>
+			<td>GET<br><pre>pass (string)</pre></td>
 			<td>JSON</td>
-			<td>On success redirects to Home, on fail shows a message</td>
+			<td>On success redirects to <code>/</code>, on fail shows a message</td>
 		</tr>
 		<tr>
 			<td>/search/:q</td>
-			<td>GET<br><pre>q = string</pre></td>
+			<td>GET<br><pre>q (string)</pre></td>
 			<td>JSON</td>
 			<td>Searches people for that query and returns a JSON array.</td>
 		</tr>
 		<tr>
 			<td>/get/:id</td>
-			<td>GET<br><pre>id = string</pre></td>
-			<td>JSON</td>
+			<td>GET<br><pre>id (string)</pre></td>
+			<td>JSON<br><pre>id
+name
+updated
+form
+comments</pre></td>
 			<td>You can pass an ID or a name, returns results.</td>
 		</tr>
 		<tr>
@@ -170,6 +174,6 @@ REST API
 #### Status types
 
 - <code>success</code>
-- <code>error</code> (always include a <code>message</code>)
+- <code>error</code> (accompanied by a <code>message</code>)
 - <code>info</code>
 
