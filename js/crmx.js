@@ -90,15 +90,14 @@ var crmx = {
 
 					// Add special button shortcuts
 					if (form[i].type==='email') {
-						form[i].html += '<a class="btn" type="button" href="#" title="Email contact"><i class="icon-envelope"></i></a></div>';
+						form[i].html += '<a class="btn smart-link" data-smart="email" href="#" title="Email contact"><i class="icon-envelope"></i></a></div>';
 					}else if (form[i].type==='search') {
-						form[i].html += '<a class="btn" type="button" href="#" title="Search in Google"><i class="icon-search"></i></a></div>';
+						form[i].html += '<a class="btn smart-link" data-smart="search" href="#" title="Search in Google"><i class="icon-search"></i></a></div>';
 					}else if (form[i].type==='tel') {
-						form[i].html += '<a class="btn" type="button" href="#" title="Call contact"><i class="icon-bullhorn"></i></a></div>';
+						form[i].html += '<a class="btn smart-link" data-smart="call" href="#" title="Call contact"><i class="icon-bullhorn"></i></a></div>';
 					}else if (form[i].type==='url') {
-						form[i].html += '<a class="btn" type="button" href="#" title="Visit website"><i class="icon-globe"></i></a></div>';
+						form[i].html += '<a class="btn smart-link" data-smart="url" href="#" title="Visit website"><i class="icon-globe"></i></a></div>';
 					}
-
 				}
 
 				// append field
@@ -111,6 +110,26 @@ var crmx = {
 					'</div>'
 				);
 			}
+
+			// Smart Links
+			$('.smart-link').on('click', function() {
+				switch($(this).data('smart')) {
+					case 'email':
+						window.open('mailto:'+$(this).siblings('input').val(), '_blank');
+					break;
+					case 'search':
+						window.open('https://www.google.com/search?q='+$(this).siblings('input').val(), '_blank');
+					break;
+					case 'call':
+						window.open('skype:'+$(this).siblings('input').val()+'?call', '_blank');
+					break;
+					case 'url':
+						window.open($(this).siblings('input').val(), '_blank');
+					break;
+				}
+				return false;
+			});
+
 
 		},
 
@@ -431,11 +450,10 @@ var crmx = {
 		$('.clearform').click(function(){crmx.clearform();});
 		$('.refresh').click(function(){crmx.refresh();});
 
-
+		// Notification click to hide
 		$('#notification').on('click', function(){
 			$(this).stop().fadeOut(200);
 		});
-
 
 		$('#s').focus();
 	}

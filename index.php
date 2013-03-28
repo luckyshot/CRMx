@@ -63,7 +63,7 @@ function get_vars() {
 
 dispatch('/', 'home');
 dispatch('/login/:pass', 'login');
-dispatch('/login/:pass/:response', 'login'); // for API usage add /0 to return json response instead of html page
+dispatch('/login/:pass/:response', 'login'); // for API usage: /login/<passwordhere>/0
 dispatch('/logout', 'logout');
 dispatch('/search/:q', 'search');
 dispatch('/get/:detail', 'get');
@@ -140,15 +140,13 @@ function login($pass, $redirect = true) {
 			}
 			$_SESSION['id'] = $key;
 
-			// If table doesn't exist (probably new environment), create it
-			// TODO: Not working yet :( need to figure out why
-			$q = 'CREATE TABLE IF NOT EXISTS `'.$_SESSION['dbprefix'].'people` (
+			$q = 'CREATE TABLE IF NOT EXISTS `'.$user['dbprefix'].'people` (
 				`id` int(20) NOT NULL AUTO_INCREMENT,
 				`name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-				`form` text COLLATE utf8_unicode_ci NOT NULL,
-				`comments` text COLLATE utf8_unicode_ci NOT NULL,
-				`created` int(11) NOT NULL,
-				`updated` int(11) NOT NULL,
+				`form` text COLLATE utf8_unicode_ci,
+				`comments` text COLLATE utf8_unicode_ci,
+				`created` int(11),
+				`updated` int(11),
 				PRIMARY KEY (`id`)
 			) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
 
@@ -161,6 +159,8 @@ function login($pass, $redirect = true) {
 	}
 	return false;
 }
+
+
 
 
 
@@ -192,6 +192,7 @@ function recent() {
 			$person['comments'] = json_decode($person['comments'], true);
 		}
 	}
+
 	if ($people) {
 		$response = json_encode($people);
 	}else{
