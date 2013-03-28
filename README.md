@@ -34,6 +34,11 @@ View a person details, edit them directly and also add timed comments:
 
 ![Person view](http://i.imgur.com/bAeyQHu.png)
 
+### Smart links
+
+Buttons appear next to the person fields to email, search Google or Skype-call in one click
+
+![Smart links](http://i.imgur.com/W4Nj2LJ.png)
 
 
 Technology
