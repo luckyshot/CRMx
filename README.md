@@ -1,9 +1,10 @@
 CRMx
 ===============
-<p style="font-size:133%;">
-	CRMx is a super-flexible micro-CRM system for personal, freelance and small businesses. It can be customized very quickly for Customer Relationship Management, Lead Management System, Project Management, To-Do List or any other usage due to its flexibility in customization and scalable code. </p>
+CRMx is a super-flexible micro-CRM system for personal, freelance and small businesses. It can be customized very quickly for Customer Relationship Management, Lead Management System, Project Management, To-Do List or any other usage due to its flexibility in customization and scalable code.
 
-CRMx allows unlimited users to work in the same or different environments very flexibly. CRMx works through a RESTful API which allows third-party services and other software to interact neatly. CRMx also has a User Access Control system (UAC) to define permissions for each user and have maximum control over the organization.
+- <strong>RESTful API</strong>: Works through a RESTful API which allows third-party services and other software to interact neatly.
+- <strong>Unlimited users & environments</strong>: Allows unlimited users to work in the same or different environments very flexibly (including a User Access Control system (UAC) to define permissions for each user and have maximum control).
+- <strong>Simple setup</strong>: Similar to Sublime Text, all the config is done in <code>config.php</code> which keeps the overall code tiny and much easier to maintain and scale.
 
 
 Screenshots
