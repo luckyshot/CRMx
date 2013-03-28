@@ -4,33 +4,36 @@
 	<meta charset="UTF-8">
 	<title><?=$sitename?></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name='robots' content='noindex,nofollow' />
-	<link href="/bootstrap.min.css" rel="stylesheet">
-	<link href="/bootstrap-responsive.min.css" rel="stylesheet">
-	<link href="/style.css" rel="stylesheet">
+	<meta name='robots' content='noindex' />
+	<link href="css/bootstrap.css" rel="stylesheet">
+	<link href="css/style.css" rel="stylesheet">
 </head>
 <body>
 
 	<!-- HEADER -->
 
-	<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container-fluid">
 				<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
+					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
 				</button>
 				<a class="brand" href="/"><?=$sitename?></a>
 				<div class="nav-collapse collapse">
 					<p class="navbar-text pull-right">
-						Logged in as <strong><?=$username?></strong> <a href="/logout" class="navbar-link" title="Logout"><i class="icon-off icon-white"></i></a>
+						<strong title="Logged in as <?=$username?>"><?=$username?></strong> <a href="/logout" class="navbar-link" title="Logout"><i class="icon-lock"></i></a>
 					</p>
 					<ul class="nav">
-						<li class="navbar-form">
-							<input id="s" class="input-large" type="text" placeholder="Start typing to search&hellip;">
+						<li>
+							<form class="navbar-form">
+								<a href="#top" class="btn" title="View table"><i class="icon-th"></i></a>
+								<a href="#people-foot" class="btn" title="View details"><i class="icon-user"></i></a>
+								<a href="#people-foot" class="btn btn-primary clearform" title="Add new contact"><i class="icon-plus icon-white"></i></a>
+								<input id="s" class="input-large search-query" type="text" placeholder="Start typing to search&hellip;">
+							</form>
 						</li>
-						<li><a href="/">Add new contact</a></li>
+						<li class="divider-vertical"></li>
+						<li><a href="/#top" title="Show all" class="refresh"><i class="icon-refresh"></i></a></li>
 					</ul>
 				</div><!--/.nav-collapse -->
 			</div>
@@ -40,33 +43,35 @@
 
 	<!-- CONTAINER -->
 
-
 	<div class="container-fluid">
 		<div class="row-fluid">
 
-			<!-- SIDEBAR -->
+			<div class="span12">
+				<table id="people-table" class="table table-striped table-hover table-condensed">
+					<thead>
+						<tr><th>Name</th><th>Title</th></tr>
+					</thead>
+					<tbody></tbody>
+					<tfoot id="people-foot"></tfoot>
+				</table>
+				<!-- <small><strong>Sort by: </strong> <a href="#">Name</a> / <a href="#">Recent</a></small> -->
+			</div>
 
-			<div class="span3">
-
-				<div class="well sidebar-nav">
-					<ul id="people" class="nav nav-list">
-						<li class="nav-header">Loading&hellip;</li>
-					</ul>
-				</div><!--/.well -->
-
-				<div class="sidebar-nav">
-					<ul id="searchable" class="nav nav-list light">
-						<li class="nav-header">Quick Search</li>
-					</ul>
-				</div><!--/.well -->
-
-			</div><!--/span-->
+		</div>
+	</div>
 
 
+	<hr>
+
+
+	<!-- CONTAINER -->
+
+	<div id="main" class="container-fluid">
+		<div class="row-fluid">
 
 			<!-- MAIN -->
 
-			<div class="span9">
+			<div class="span12">
 
 				<div class="row-fluid">
 					<div class="span10">
@@ -81,7 +86,7 @@
 
 
 				<div id="main" class="row-fluid">
-					<div class="span4">
+					<div class="span6">
 					
 						<div id="form">
 							<!-- form fields go here -->
@@ -93,18 +98,18 @@
 						</p>
 
 					</div><!--/span-->
-					<div class="span8">
+					<div class="span6">
 
 
 						<div id="commentbox" class="hide">
-							<h4>Comments</h4>
+							<label>Comments</label>
 							
 							<textarea id="c" class="span12" rows="3"></textarea>
 							<p><a href="#" id="c_button" class="btn pull-right">Add comment</a></p>
 						</div>
 
 						<div id="comments">
-							
+							<!-- comments go here -->
 						</div>
 
 
@@ -118,19 +123,25 @@
 		<div id="notification" class="alert hide" title="Click to close"></div>
 
 
-		<hr>
-
 		<footer>
-			<p><small>&copy; CRMx <?=date('Y')?> by <a href="http://xaviesteve.com" target="_blank">Xavi</a></small></p>
+
+			<hr>
+
+			<div class="row-fluid">
+				<div class="span6">
+					<p><small>&copy; CRMx <?=date('Y')?> by <a href="http://xaviesteve.com" target="_blank">Xavi</a></small></p>
+				</div>
+				<div class="span6">
+					<p class="tr"><a href="#top">Back to top</a></p>
+				</div>
+			</div>
 		</footer>
 
 	</div><!--/.fluid-container-->
 
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 
-	<script src="http://cdn.xaviesteve.com/bootstrap-collapse.js"></script>
-	<script src="http://cdn.xaviesteve.com/jquery-easydate.min.js"></script>
-	<script src="/script.min.js"></script>
+	<script src="js/script.js"></script>
 	<script>
 		$(document).ready(function(){
 			// Hard-code from backend

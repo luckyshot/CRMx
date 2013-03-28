@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `people` (
+CREATE TABLE IF NOT EXISTS `test_people` (
   `id` int(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `form` text COLLATE utf8_unicode_ci NOT NULL,

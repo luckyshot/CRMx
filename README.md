@@ -6,6 +6,34 @@ CRMx is a super-simple minimal CRM (Client Relationship Management) specially ai
 There is no Settings menu or user accounts, all is done in PHP variables (like Sublime Text) in the <code>config.php</code> file, which makes the code app a lot smaller as well as easy to administer, maintain and scale.
 
 
+Screenshots
+---------------
+
+### Table view
+
+From here you have an overall view of your contacts:
+
+![Table view](http://i.imgur.com/U6krA3U.png)
+
+### Search as-you-type
+
+Type in the search box to start filtering, results update dynamically as you type:
+
+![Search as-you-type](http://i.imgur.com/5v3kgpQ.png)
+
+### Smart filtering
+
+CRMx detects your custom form field types and adds shortcut lists on the top navigation automatically:
+
+![Smart filtering](http://i.imgur.com/H6Ur7IR.png)
+
+### Person view
+
+View a person details, edit them directly and also add timed comments:
+
+![Person view](http://i.imgur.com/bAeyQHu.png)
+
+
 
 Technology
 ---------------
@@ -36,7 +64,7 @@ There is no login screen in CRMx. Users bookmark a long URL and click on it to l
 User accounts
 ---------------
 
-User accounts are created by adding them to the <code>$users</code> PHP array.
+User accounts are created by adding them to the <code>$users</code> PHP array. These are the fields you can customize:
 
 - <strong>name</strong> <small>(string)</small> Full name of the user
 - <strong>pass</strong> <small>(string)</small> Add a very long random alphanumeric string of between 100 and 300 characters (the more the better, check <code>is_logged_in()</code> in the code for a generator)
@@ -45,8 +73,8 @@ User accounts are created by adding them to the <code>$users</code> PHP array.
 	- <strong>s</strong> <i>save</i>: create and update contacts
 	- <strong>d</strong> <i>delete</i>: can delete contacts
 	- <strong>c</strong> <i>comment</i>: can comment on contacts
-- <strong>dbprefix</strong> <small>(string)</small> Many users can work in different environments on the same database but using a different table. To do this, just specify a different MySQL prefix here
-- <strong>sitename</strong> <small>(string)</small> Customize the app title for each user
+- <strong>dbprefix</strong> <small>(string)</small> Many users can work in different environments on the same database by using a different table. To do this, just specify a different MySQL prefix here (i.e. <code>sales_</code>)
+- <strong>sitename</strong> <small>(string)</small> You can customize the app title for each user
 
 
 
@@ -71,7 +99,7 @@ Environments allow users to work on separated CRMx (with their own contacts and 
 
 
 
-Form fields
+Form field types
 ---------------
 
 It's very easy to customize CRMx to your own needs. You just need to modify the <code>$form</code> PHP array and the app will take care of the rest.
@@ -97,20 +125,18 @@ Specify <code>'type' => 'select'</code> and a list of elements:
 
 ### Others formats
 
-You can use other HTML5 form field types like: <code>color</code>, <code>date</code>, <code>datetime</code>, <code>datetime-local</code>, <code>email</code>, <code>month</code>, <code>number</code>, <code>range</code>, <code>search</code>, <code>tel</code>, <code>time</code>, <code>url</code> and <code>week</code>.
+You can use other HTML5 form field types like: <code>password</code>, <code>hidden</code>, <code>color</code>, <code>date</code>, <code>datetime</code>, <code>datetime-local</code>, <code>email</code>, <code>month</code>, <code>number</code>, <code>range</code>, <code>search</code>, <code>tel</code>, <code>time</code>, <code>url</code> and <code>week</code>.
 
 <pre>'name' => 'website',
 'title' => 'Website URL',
 'type' => 'url'</pre>
 
 
-## Searchable functionality
+## Hidden
 
-Below the contact list, you can generate a list of shortcuts (links) to search that field in a click:
+To skip a form field to show in the main table, set the <code>hidden</code> property to <code>1</code>. This is useful when you have a lot of fields.
 
-<pre>'searchable' => 1,</pre>
-
-Note: Values in select dropdowns that are "<code>-</code>" are not added to the list.
+<pre>'hidden' => 1,</pre>
 
 
 REST API
@@ -214,3 +240,43 @@ REST API
 - <code>error</code> (accompanied by a <code>message</code>)
 - <code>info</code>
 
+
+Changelog
+----------------
+
+### 28 March 2013
+- Improved docs, added screenshots
+- Table view
+- Redesigned top nav
+- Search also searches comments now
+- Added icons and buttons
+- Many more improvements and small tweaks
+- Fixed bugs with notification and many others
+- Reorganized all files
+- Minified all JS into one file
+- Minified CSS into two files
+- MIT licensed
+
+
+
+To Do
+----------------
+- Multilanguage support
+- Generate tables automatically
+- Smart links in detail view
+- Use same date format along MySQL
+- Delete comments
+
+
+License
+----------------
+
+CRMx has been created by Xavi Esteve and is licensed under a MIT License.
+
+Copyright (c) 2013 Xavi Esteve
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

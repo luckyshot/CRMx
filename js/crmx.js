@@ -1,5 +1,27 @@
-// https://github.com/bryanwoods/autolink-js
-var g=[].slice;String.prototype.autoLink=function(){var e,b,d,a,c,f;c=1<=arguments.length?g.call(arguments,0):[];d="";a=c[0];f=/(^|\s)(\b(https?|ftp):\/\/[\-A-Z0-9+\u0026@#\/%?=~_|!:,.;]*[\-A-Z0-9+\u0026@#\/%=~_|])/gi;if(!(0<c.length))return this.replace(f,"$1<a href='$2'>$2</a>");null!=a.callback&&"function"===typeof a.callback&&(e=a.callback,delete a.callback);for(b in a)c=a[b],d+=" "+b+"='"+c+"'";return this.replace(f,function(a,c,b){a=e&&e(b);return""+c+(a||"<a href='"+b+"'"+d+">"+b+"</a>")})};
+/*
+	,o888888o.    8 888888888o.            ,8.       ,8.          `8.`8888.      ,8' 
+   8888     `88.  8 8888    `88.          ,888.     ,888.          `8.`8888.    ,8'  
+,8 8888       `8. 8 8888     `88         .`8888.   .`8888.          `8.`8888.  ,8'   
+88 8888           8 8888     ,88        ,8.`8888. ,8.`8888.          `8.`8888.,8'    
+88 8888           8 8888.   ,88'       ,8'8.`8888,8^8.`8888.          `8.`88888'     
+88 8888           8 888888888P'       ,8' `8.`8888' `8.`8888.         .88.`8888.     
+88 8888           8 8888`8b          ,8'   `8.`88'   `8.`8888.       .8'`8.`8888.    
+`8 8888       .8' 8 8888 `8b.       ,8'     `8.`'     `8.`8888.     .8'  `8.`8888.   
+   8888     ,88'  8 8888   `8b.    ,8'       `8        `8.`8888.   .8'    `8.`8888.  
+	`8888888P'    8 8888     `88. ,8'         `         `8.`8888. .8'      `8.`8888. 
+
+Copyright (c) 2013 Xavi Esteve (MIT License)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+*/
+
+var g=[].slice;String.prototype.autoLink=function(){var e,b,d,a,c,f;c=1<=arguments.length?g.call(arguments,0):[];d="";a=c[0];f=/(^|\s)(\b(https?|ftp):\/\/[\-A-Z0-9+\u0026@#\/%?=~_|!:,.;]*[\-A-Z0-9+\u0026@#\/%=~_|])/gi;if(!(0<c.length))return this.replace(f,"$1<a href='$2'>$2</a>");null!=a.callback&&"function"===typeof a.callback&&(e=a.callback,delete a.callback);for(b in a)c=a[b],d+=" "+b+"='"+c+"'";return this.replace(f,function(a,c,b){a=e&&e(b);return""+c+(a||"<a href='"+b+"'"+d+">"+b+"</a>")})};// github.com/bryanwoods/autolink-js
+
 
 var crmx = {
 	config: {
@@ -21,33 +43,67 @@ var crmx = {
 		 */
 		form: function(form) {"use strict";
 			$('#form').html('');
+			//$('#searchable').html('');
 			for (var i in form) {
+
+				// TABLE HEADER
+				// First add heading to the table thead
+				if (!form[i].hidden) {
+					$('#people-table>thead>tr').append('<th>'+form[i].title+'</th>');
+				}
+
 				// detect field type and generate its html
 				if (form[i].type==='select') {
+					// FORM
 					form[i].html = '<select id="'+form[i].name+'">';
+					// TOP NAV
+					$('.nav').append('<li class="dropdown">' +
+						'<a href="#" class="dropdown-toggle" data-toggle="dropdown">'+form[i].title+' <span class="caret"></span></a>' +
+						'<ul id="nav-drop-'+form[i].name+'" class="dropdown-menu">' +
+							'</ul>' +
+						'</li>');
+
+
 						for (var j in form[i].list) {
+							// Add to select
 							form[i].html += '<option>'+form[i].list[j]+'</option>';
 
-							if (form[i].searchable && form[i].list[j]!=='-') {
-								$('#searchable').append('<li><a href="#" data-search=\'"'+form[i].name+'":"'+form[i].list[j]+'"\'>'+form[i].list[j]+'<small>'+form[i].title+'</small></a></li>');
-							}
+							// Add to top-nav
+							$('#nav-drop-'+form[i].name).append('<li data-search=\'"'+form[i].name+'":"'+form[i].list[j]+'"\'><a href="#">'+form[i].list[j]+'</a></li>');
+
 						}
 					form[i].html += '</select>';
 
 				}else{
+					form[i].html = '';
+
 					if (form[i].type == null) {
 						form[i].type = 'text';
 					}
-					form[i].html = '<input type="'+form[i].type+'" id="'+form[i].name+'" placeholder="'+form[i].title+'">';
 
-					if (form[i].searchable) {
-						$('#searchable').append('<li><a href="#" data-search="'+form[i].name+'">'+form[i].name+'</a></li>');
+					// Add special button shortcuts
+					if (form[i].type==='email' || form[i].type==='search' || form[i].type==='tel' || form[i].type==='url' ) {
+						form[i].html += '<div class="input-append">';
 					}
+
+					form[i].html += '<input type="'+form[i].type+'" id="'+form[i].name+'" placeholder="'+form[i].title+'">';
+
+					// Add special button shortcuts
+					if (form[i].type==='email') {
+						form[i].html += '<a class="btn" type="button" href="#" title="Email contact"><i class="icon-envelope"></i></a></div>';
+					}else if (form[i].type==='search') {
+						form[i].html += '<a class="btn" type="button" href="#" title="Search in Google"><i class="icon-search"></i></a></div>';
+					}else if (form[i].type==='tel') {
+						form[i].html += '<a class="btn" type="button" href="#" title="Call contact"><i class="icon-bullhorn"></i></a></div>';
+					}else if (form[i].type==='url') {
+						form[i].html += '<a class="btn" type="button" href="#" title="Visit website"><i class="icon-globe"></i></a></div>';
+					}
+
 				}
 
 				// append field
 				$('#form').append(
-					'<div class="control-group">' +
+					'<div class="control-group span6">' +
 						'<label class="control-label" for="'+form[i].name+'">'+form[i].title+'</label>' +
 						'<div class="controls">' +
 							form[i].html +
@@ -64,18 +120,32 @@ var crmx = {
 		 * @params (object) 
 		 */
 		people: function(people) {"use strict";
-			$('#people').html('');
+			$('#people-table>tbody').html('');
 			for (var i in people) {
-				$('#people').append(
-					'<li><a data-id="'+people[i].id+'" href="#">'+people[i].name+'<small>'+((people[i].form.title)?people[i].form.title:'')+'</small></a></li>'
-				);
+
+				$('#people-table>tbody').append('<tr id="person-'+i+'"><td><a href="#" data-id="'+people[i].id+'"><button class="btn btn-mini"><i class="icon-search"></i></button> <strong>'+people[i].name+'</strong></a></td><td>'+people[i].form.title+'</td></tr>');
+
+				var tr = $('#people-table>tbody>tr#person-'+i);
+				for (var j in crmx.form) {
+					if (!crmx.form[j].hidden) {
+						tr.append('<td>'+((people[i].form[crmx.form[j].name]) ? people[i].form[crmx.form[j].name] : '')+'</td>');
+					}
+				}
 			}
-			// Now bind event
-			$('#people a').on('click', function(){
-				crmx.get($(this).data('id'));
-				return false;
-			});
 		},
+
+		/**
+		 * load.person
+		 * Fills the values in name, title and form fields
+		 * @params (object)
+		 */
+		// person: function(person) {"use strict";
+		// 	// TODO
+		// 	$('#commentbox').fadeIn();
+		// 	for(var i in crmx.form) {
+		// 		$('#'+crmx.form[i].name).val( person[crmx.form[i].name] );
+		// 	}
+		// },
 
 		/**
 		 * load.comments
@@ -223,6 +293,8 @@ var crmx = {
 
 				crmx.load.comments(response.comments);
 
+				document.location = '#people-foot';
+
 			}else{
 				crmx.notification( response.message, response.status );
 			}
@@ -244,6 +316,7 @@ var crmx = {
 				crmx.load.people(response);
 			}else{
 				crmx.notification( response.message, response.status );
+				crmx.load.people({});
 			}
 		});
 	},
@@ -256,17 +329,14 @@ var crmx = {
 	 */
 	notification: function(message, type) {"use strict";
 		if (message==null) {
-			$('#notification').fadeOut('fast');
+			$('#notification').stop().fadeOut('fast');
 		}else{
 			$('#notification')
 				.html( ((type)?'<strong>'+type+'</strong> ':'')+message)
 				.attr('class', 'alert alert-'+type)
 				.fadeIn(500, function(){
-					$(this).fadeOut(10000);
-				})
-				.click(function(){
-					$(this).fadeOut(500);
-				});
+					$(this).stop().fadeOut(10000);
+			});
 		}
 	},
 
@@ -283,6 +353,18 @@ var crmx = {
 			$('.save').fadeIn().html('Create new');
 			$('#delete').fadeOut();
 		}
+	},
+
+
+	/**
+	 * clearform
+	 * 
+	 */
+	clearform: function() {"use strict";
+		$('#main input,#main select').val('');
+		$('#delete').addClass('hide');
+		crmx.updateui();
+		$('#name').focus();
 	},
 
 
@@ -312,6 +394,7 @@ var crmx = {
 		$('#name').on('input paste', function() {crmx.updateui();});
 		$('#title').on('input paste', function() {crmx.updateui();});
 
+		// Search box
 		$('#s').on('input paste', function() {
 			if (crmx.timer===false) {
 				crmx.timer = true;
@@ -321,21 +404,36 @@ var crmx = {
 
 		$('#c_button').on('click', function(){
 			if ($('#id').val().length<1) {
-				crmx.notification('Select a contact first', 'error');
-				return false;
+				crmx.notification('Select a name first', 'error');
 			}
 			if ($('#c').val().length<1) {
 				crmx.notification('Enter a comment first', 'error');
-				return false;
 			}
 			crmx.comment($('#id').val(), $('#c').val().replace(/\n/g, '<br>'));
+			return false;
 		});
 
-		$('#searchable').click(function(e){
-			var target = $(e.target); // the child that fired the original click
-		
+		// Top nav dropdown filters
+		$('.dropdown-menu').click(function(e){
+			var target = $(e.target).closest('li'); // the child that fired the original click		
 			crmx.search(target.data('search'));
-		
+			$('#s').val(target.data('search'));
+		});
+
+		// Table person click
+		$('#people-table').on('click', 'a', function(){
+			crmx.get( $(this).data('id') )
+			return false;
+		});
+
+
+		// Clear form (add new)
+		$('.clearform').click(function(){crmx.clearform();});
+		$('.refresh').click(function(){crmx.refresh();});
+
+
+		$('#notification').on('click', function(){
+			$(this).stop().fadeOut(200);
 		});
 
 
