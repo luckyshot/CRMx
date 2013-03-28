@@ -1,9 +1,9 @@
 CRMx
 ===============
+<p style="font-size:133%;">
+	CRMx is a super-flexible micro-CRM system for personal, freelance and small businesses. It can be customized very quickly for Customer Relationship Management, Lead Management System, Project Management, To-Do List or any other usage due to its flexibility in customization and scalable code. </p>
 
-CRMx is a super-simple minimal CRM (Client Relationship Management) specially aimed at flexibility and scalability. It allows for many users to work in many environments and also has a User Access Control system to define permissions for each user.
-
-There is no Settings menu or user accounts, all is done in PHP variables (like Sublime Text) in the <code>config.php</code> file, which makes the code app a lot smaller as well as easy to administer, maintain and scale.
+CRMx allows unlimited users to work in the same or different environments very flexibly. CRMx works through a RESTful API which allows third-party services and other software to interact neatly. CRMx also has a User Access Control system (UAC) to define permissions for each user and have maximum control over the organization.
 
 
 Screenshots
@@ -38,7 +38,7 @@ View a person details, edit them directly and also add timed comments:
 Technology
 ---------------
 
-- Limonade PHP micro-framework (inc. custom MySQL <i>lemon</i>)
+- Limonade PHP micro-framework (inc. <a href="https://gist.github.com/luckyshot/5098146">custom MySQL <i>lemon</i></a>)
 - MySQL
 - JavaScript / jQuery / JSON
 - Twitter Bootstrap (and LESS)
@@ -52,14 +52,11 @@ Installation
 2. Open <code>dump.sql</code>, add your <code>MYSQL_PREFIX</code> (if any) and then import into database
 
 
+Settings
+---------------
 
-### Logging in
+There is no Settings menu or user accounts, all is done in PHP variables (like Sublime Text) in the <code>config.php</code> file, which makes the code app a lot smaller as well as easy to administer, maintain and scale.
 
-There is no login screen in CRMx. Users bookmark a long URL and click on it to login. You should specify a long and unique password (at least 50 characters) for each user and then send them the URL to bookmark, which looks like:
-
-<code>http://crmx.com/login/thesuperlongpassword</code>
-
-	
 
 User accounts
 ---------------
@@ -77,18 +74,11 @@ User accounts are created by adding them to the <code>$users</code> PHP array. T
 - <strong>sitename</strong> <small>(string)</small> You can customize the app title for each user
 
 
+### Logging in
 
-MySQL table details
----------------
+There is no login screen in CRMx. Users bookmark a long URL and click on it to login. You should specify a long and unique password (at least 50 characters) for each user and then send them the URL to bookmark, which looks like:
 
-### <code>People</code> table
-
-- <strong>id</strong> <small>(int20, primary, autoincrement)</small>
-- <strong>name</strong> <small>(string255, mandatory)</small>
-- <strong>form</strong> <small>(text, json)</small>
-- <strong>comments</strong> <small>(text, json)</small>
-- <strong>created</strong> <small>(int11)</small>
-- <strong>updated</strong> <small>(int11)</small>
+<code>http://crmx.com/login/thesuperlongpassword</code>
 
 
 
@@ -96,6 +86,7 @@ Environments
 ---------------
 
 Environments allow users to work on separated CRMx (with their own contacts and form fields) while using the same app. To enable more environments, import the table in <code>dump.sql</code> with a new prefix and add that prefix to a user. Then add another array in <code>$form</code>. Simple as that.
+
 
 
 
@@ -137,6 +128,8 @@ You can use other HTML5 form field types like: <code>password</code>, <code>hidd
 To skip a form field to show in the main table, set the <code>hidden</code> property to <code>1</code>. This is useful when you have a lot of fields.
 
 <pre>'hidden' => 1,</pre>
+
+
 
 
 REST API
@@ -241,20 +234,48 @@ REST API
 - <code>info</code>
 
 
+
+
+
+
+MySQL table details
+---------------
+
+### <code>people</code> table
+
+- <strong>id</strong> <small>(int20, primary, autoincrement)</small>
+- <strong>name</strong> <small>(string255, mandatory)</small>
+- <strong>form</strong> <small>(text, json)</small>
+- <strong>comments</strong> <small>(text, json)</small>
+- <strong>created</strong> <small>(int11)</small>
+- <strong>updated</strong> <small>(int11)</small>
+
+
+
+
+
+
+
+
 Changelog
 ----------------
 
 ### 28 March 2013
+
 - Improved docs, added screenshots
-- Table view
+- Table view instead of Sidebar
 - Redesigned top nav
 - Search also searches comments now
 - Added icons and buttons
+- Form is now two-column instead of one
 - Many more improvements and small tweaks
-- Fixed bugs with notification and many others
+- Fixed bugs with notification message
+- Other bugs fixed
 - Reorganized all files
 - Minified all JS into one file
+- jQuery to use latest instead of 1.8.6
 - Minified CSS into two files
+- Responsive improvements
 - MIT licensed
 
 
