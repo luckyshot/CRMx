@@ -176,7 +176,7 @@ var crmx = {
 		comments: function(comments) {"use strict";
 			$('#comments').html('');
 			for(var i in comments) {
-				$('#comments').append('<blockquote>'+comments[i].text.autoLink()+'<small><em class="easydate">'+comments[i].date+'</em> by <strong>'+comments[i].user+'</strong></small></blockquote>');
+				$('#comments').append('<blockquote>'+comments[i].text.autoLink()+'<small><em class="easydate">'+comments[i].date+'</em> by <strong>'+comments[i].user+'</strong> <a href="#" class="comment-delete" data-id="'+comments[i].id+'" title="Delete comment">&times;</a></small></blockquote>');
 			}
 			$(".easydate").easydate();
 		}
@@ -442,11 +442,12 @@ var crmx = {
 		/********************************************
 		 * Event Binding
 		 ********************************************/
+		// Save person
 		$('.save').on('click', function(){
 			crmx.save();
 			return false;
 		});
-
+		// Delete person
 		$('#delete').on('click', function(){
 			crmx.remove( $('#id').val() );
 			return false;
@@ -466,6 +467,7 @@ var crmx = {
 			}
 		});
 
+		// Add comment
 		$('#c_button').on('click', function(){
 			if ($('#id').val().length<1) {
 				crmx.notification('Select a name first', 'error');
@@ -474,6 +476,22 @@ var crmx = {
 				crmx.notification('Enter a comment first', 'error');
 			}
 			crmx.comment($('#id').val(), $('#c').val().replace(/\n/g, '<br>'));
+			return false;
+		});
+
+		// Delete comment
+		$('#comments').on('click', '.comment-delete', function() {
+			if(confirm('Are you sure you want to delete this comment?')) {
+				$.ajax({
+					type: "DELETE",
+					url: "comment/"+$(this).data('id')
+				}).done(function( response ) {
+					crmx.notification(response.message, response.status);
+					if (response.status==='success') {
+						crmx.load.comments(response.comments);
+					}
+				});
+			}
 			return false;
 		});
 

@@ -20,7 +20,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 */
-error_reporting(E_NONE);
+error_reporting(E_ALL);
 
 
 
@@ -33,7 +33,7 @@ require_once('config.php');
  * CONFIG
  *******************************************************/
 
-option('debug', false);
+option('debug', true);
 
 
 
@@ -47,20 +47,23 @@ $c = mysqli_connect(MYSQL_SERVER, MYSQL_USER, MYSQL_PASS, MYSQL_DATABASE);
  * ROUTERS
  *******************************************************/
 
-dispatch('/', 'home');
 dispatch('/login/:pass', 'login');
-dispatch('/login/:pass/:response', 'login'); // for API usage: /login/<passwordhere>/0
 dispatch('/logout', 'logout');
+
+dispatch('/', 'home');
+
+// People
 dispatch('/search/:q', 'search');
+
+// Person
 dispatch('/get/:detail', 'get');
-
-
 dispatch_post('/save', 'save');
-dispatch_post('/comment', 'comment');
 dispatch_delete('/delete/:id', 'delete');
 
+dispatch_post('/comment', 'comment');
+dispatch_delete('/comment/:id', 'commentdelete');
 
-
+// for API usage
 dispatch('/api/:pass/:action/:detail', 'api');
 
 
@@ -69,6 +72,29 @@ dispatch('/api/:pass/:action/:detail', 'api');
 /********************************************************
  * MODELS
  *******************************************************/
+
+/**
+ * api
+ * Authenticates and executes a request all-in-one
+ * @params (string) User's password
+ * @params (string) Action
+ * @params (string) Details of the action
+ */
+function api ($pass, $action, $detail) {
+	if (!login($pass, false)) {
+		return json(array('status'=>'error','message'=>"Authentication failed"));
+	}
+	// TODO: There may be a better way to do this and not repeat ourselves
+	if ($action === 'search') { return search($detail);
+	}else if ($action === 'get') { return get($detail);
+	}else if ($action === 'save') { return save();
+	}else if ($action === 'delete') { return delete($detail);
+	}else if ($action === 'comment') { return comment($detail);
+	}else{ return json(array('status'=>'error','message'=>"Action not recognized")); }
+}
+
+
+
 
 
 /**
@@ -158,24 +184,6 @@ function home() {
 
 
 
-
-
-/**
- * api
- * Authenticates and executes a request all-in-one
- * @params (string) User's password
- * @params (string) Action
- * @params (string) Details of the action
- */
-function api ($pass, $action, $detail) {
-	if (!login($pass, false)) {
-		return json(array('status'=>'error','message'=>"API Authentication failed"));
-	}
-
-	if ($action === 'get') {
-		return get($detail);
-	}
-}
 
 
 
@@ -375,6 +383,7 @@ function comment($id) {
 		$comments = json_decode($comments[0]['comments'], true);
 //var_dump($comments);
 		array_unshift($comments, array(
+			'id' => generateRandomString(20),
 			'user' => $_SESSION['name'],
 			'date' => date('c', time()), // iso 8601 format
 			'text' => $_POST['comment']
@@ -392,7 +401,37 @@ function comment($id) {
 }
 
 
-
+function commentdelete($id) {
+	if (!isset($_SESSION['level']) OR strpos($_SESSION['level'], 'd')===-1) {
+		$response = json(array('status'=>'error','message'=>"Your user cannot delete comments"));
+	}else{
+		global $c;
+		// load comments from person
+		$person = db("SELECT id,comments FROM ".$_SESSION['dbprefix']."people WHERE comments LIKE '%".$c->real_escape_string($id)."%' ORDER BY updated DESC LIMIT 1", $c);
+		$person[0]['comments'] = json_decode($person[0]['comments'], true);
+		// remove from array
+		foreach($person[0]['comments'] as $key => $comment) {
+			if ($comment['id']=='mk_47kWpdWGpGIZu$G4V') {
+				unset($person[0]['comments'][$key]);
+				break;
+			}
+		}		
+		// update person
+		$result = db("UPDATE ".$_SESSION['dbprefix']."people SET 
+			comments = '".$c->real_escape_string(json_encode($person[0]['comments']))."' 
+			WHERE  id = ".($person[0]['id']).";", $c);
+		if ($result) {
+			$response = json(array(
+				'status'=>'success',
+				'message'=>"Comment deleted",
+				'comments'=>$person[0]['comments'])
+			);
+		}else{
+			$response = json(array('status'=>'error','message'=>"Error deleting comment"));
+		}
+	}
+	return $response;
+}
 
 
 
