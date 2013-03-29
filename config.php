@@ -21,12 +21,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 */
 
-option('base_uri', '/'); # '/' or same as the RewriteBase in your .htaccess
+option('base_uri', '/'); // '/' or same as the RewriteBase in your .htaccess
 
 date_default_timezone_set('Europe/London');
 
-define("SITE_NAME", "CRMx");
-define("SITE_VERSION", "0.1.6b");
+define("SITE_NAME", "CRMx"); // Default sitename when none specified in environments
+define("SITE_VERSION", "0.2.3b");
 
 define("MYSQL_SERVER", "localhost");
 define("MYSQL_USER", "user");
@@ -34,32 +34,59 @@ define("MYSQL_PASS", "pass");
 define("MYSQL_DATABASE", "database");
 
 
+// Plugin list
+$plugins = array(/*'test'*/);
+
+
 // Environments
 $form = array(
-	// Type can be: text, select, color, date, datetime, datetime-local, email, month, number, range, search, tel, time, url and week
 	'test_' => array( // table prefix
 		// name (default)
 		// title (default)
-		array('name' => 'group',	'title' => 'Group',	'type' => 'select',	'list' => array( "-", "London", "Barcelona")),
-		array('name' => 'type',		'title' => 'Type',	'type' => 'select',	'list' => array( "-", "Partner", "Client", "Lead")),
-		array('name' => 'email',	'type' => 'email',	'title' => 'Email'),
-		array('name' => 'phone',	'type' => 'tel',	'title' => 'Phone Number'),
-		array('name' => 'company',	'type' => 'search',	'title' => 'Company'),
-		array('name' => 'address',	'type' => 'search',	'title' => 'Address'),
-	),
+		array(
+			'title' => 'Group',
+			'name' => 'group',
+			'type' => 'select',
+			'list' => array( "-", "London", "Barcelona")
+		),
+		array(
+			'title' => 'Type',
+			'name' => 'type',
+			'type' => 'select',
+			'list' => array( "-", "Partner", "Client", "Lead")
+		),
+		array(
+			'title' => 'Email',
+			'name' => 'email',
+			'type' => 'email'
+		),
+		array(
+			'title' => 'Phone Number'
+			'name' => 'phone',
+			'type' => 'tel',
+		),
+		array(
+			'title' => 'Company'
+			'name' => 'company',
+			'type' => 'search',
+		),
+		array(
+			'title' => 'Address'
+			'name' => 'address',
+			'type' => 'search',
+		)
+	)
 );
 
 
 // Users
 $users = array(
-
-	// TEST_
+	// Environment: test_
 	array(
 		'name' => 'Tester',
 		'pass' => 'test',
 		'level' => 'rsdc',
 		'dbprefix' => 'test_',
 		'sitename' => 'CRMx Example'
-	),
-
+	)
 );

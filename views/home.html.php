@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name='robots' content='noindex' />
 	<link href="css/bootstrap.css" rel="stylesheet">
-	<link href="css/style.css" rel="stylesheet">
+	<link href="css/style.css?v=<?=$app_version?>" rel="stylesheet">
 </head>
 <body>
 
@@ -49,7 +49,7 @@
 			<div class="span12">
 				<table id="people-table" class="table table-striped table-hover table-condensed">
 					<thead>
-						<tr><th>Name</th><th>Title</th></tr>
+						<tr><th class="active" data-name="name">Name</th><th data-name="title">Title</th></tr>
 					</thead>
 					<tbody></tbody>
 					<tfoot id="people-foot"></tfoot>
@@ -129,7 +129,7 @@
 
 			<div class="row-fluid">
 				<div class="span6">
-					<p><small>&copy; CRMx <?=date('Y')?> by <a href="http://xaviesteve.com" target="_blank">Xavi</a></small></p>
+					<p><small>&copy;  <?=date('Y')?> CRMx <?=$app_version?> by <a href="http://xaviesteve.com" target="_blank">Xavi</a></small></p>
 				</div>
 				<div class="span6">
 					<p class="tr"><a href="#top">Back to top</a></p>
@@ -140,13 +140,22 @@
 	</div><!--/.fluid-container-->
 
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-	<script src="js/script.js"></script>
+
+
+	<!--<script src="js/script.js?v=<?=$app_version?>"></script>-->
+	<script src="js/bootstrap-collapse.js"></script>
+	<script src="js/bootstrap-dropdown.js"></script>
+	<script src="js/jquery-easydate.js"></script>
+	<script src="js/crmx.js"></script>
+
+
 	<script>
 		$(document).ready(function(){
 			// Hard-code from backend
 			crmx.config = {
 				sitename: '<?=$sitename?>',
-				username: '<?=$username?>'
+				username: '<?=$username?>',
+				plugins: <?=$plugins?>
 			};
 			crmx.form = <?=$form?>;
 			crmx.people = <?=$people?>;

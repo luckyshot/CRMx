@@ -26,7 +26,8 @@ var g=[].slice;String.prototype.autoLink=function(){var e,b,d,a,c,f;c=1<=argumen
 var crmx = {
 	config: {
 		sitename: '',
-		username: ''
+		username: '',
+		sort: 'name'
 	},
 	form: {},
 	people: {},
@@ -49,7 +50,7 @@ var crmx = {
 				// TABLE HEADER
 				// First add heading to the table thead
 				if (!form[i].hidden) {
-					$('#people-table>thead>tr').append('<th>'+form[i].title+'</th>');
+					$('#people-table>thead>tr').append('<th data-name="'+form[i].name+'">'+form[i].title+'</th>');
 				}
 
 				// detect field type and generate its html
@@ -140,9 +141,10 @@ var crmx = {
 		 */
 		people: function(people) {"use strict";
 			$('#people-table>tbody').html('');
+			crmx.sort(crmx.config.sort, people); // TODO: Optimize so it doesn't sort every time
 			for (var i in people) {
 
-				$('#people-table>tbody').append('<tr id="person-'+i+'"><td><a href="#" data-id="'+people[i].id+'"><button class="btn btn-mini"><i class="icon-search"></i></button> <strong>'+people[i].name+'</strong></a></td><td>'+people[i].form.title+'</td></tr>');
+				$('#people-table>tbody').append('<tr id="person-'+i+'"><td><a href="#" data-id="'+people[i].id+'"><button class="btn btn-mini hidden-phone"><i class="icon-search"></i></button> <strong>'+people[i].name+'</strong></a></td><td>'+people[i].form.title+'</td></tr>');
 
 				var tr = $('#people-table>tbody>tr#person-'+i);
 				for (var j in crmx.form) {
@@ -213,6 +215,7 @@ var crmx = {
 		}).done(function( response ) {
 			crmx.notification( response.message, response.status );
 			if (response.status==='success') {
+				crmx.notification('Saved', 'success');
 				$('.save').fadeOut();
 				$('#delete').fadeIn();
 				$('#commentbox').fadeIn();
@@ -295,7 +298,6 @@ var crmx = {
 			if (response.status!=='error') {
 				crmx.notification();
 
-				// Clean up!
 				$('#name').val(response.name);
 				$('#id').val(response.id);
 				$('#title').val(response.form.title);
@@ -388,6 +390,25 @@ var crmx = {
 
 
 	/**
+	 * sort
+	 * 
+	 */
+	sort: function(column, data) {"use strict";
+		function createSorter(column) {
+			return function (a,b) {
+			if (column==='name' || column==='title') {
+				var aVal = a[column], bVal = b[column];		
+			}else{
+				var aVal = a.form[column], bVal = b.form[column];		
+			}
+				return aVal > bVal ? 1 : (aVal < bVal ?  - 1 : 0);
+		};
+		}
+		return data.sort(createSorter(column));
+	},
+
+
+	/**
 	 * run
 	 * Starts the app, loads people and form, binds events
 	 */
@@ -396,7 +417,31 @@ var crmx = {
 		crmx.load.people(crmx.people);
 		crmx.load.form(crmx.form);
 
-		// Event Binding
+		// Load plugins' JS and CSS
+		for (var i = 0; i < crmx.config.plugins.length; i++) {
+			var plugin = crmx.config.plugins[i];
+			// CSS
+			$.ajax({
+				url: 'plugins/'+plugin+'/'+plugin+'.css',
+				type:'HEAD',
+				success: function() {
+					$('head').append('<link href="plugins/'+plugin+'/'+plugin+'.css" rel="stylesheet">');
+				}
+			});
+			// JS
+			$.ajax({
+				url: 'plugins/'+plugin+'/'+plugin+'.js',
+				type:'HEAD',
+				success: function() {
+					$('body').append('<script src="plugins/'+plugin+'/'+plugin+'.js"></script>');
+				}
+			});
+		}
+
+
+		/********************************************
+		 * Event Binding
+		 ********************************************/
 		$('.save').on('click', function(){
 			crmx.save();
 			return false;
@@ -441,8 +486,16 @@ var crmx = {
 
 		// Table person click
 		$('#people-table').on('click', 'a', function(){
-			crmx.get( $(this).data('id') )
+			crmx.get( $(this).data('id') );
 			return false;
+		});
+
+		// Table sort by column
+		$('#people-table thead').on('click', 'th', function(){
+			$('#people-table th').removeClass('active');
+			$(this).addClass('active');
+			crmx.config.sort = $(this).data('name');
+			crmx.load.people( crmx.people );
 		});
 
 
@@ -460,4 +513,5 @@ var crmx = {
 
 
 }; // crmx
+
 

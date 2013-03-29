@@ -42,20 +42,6 @@ $c = mysqli_connect(MYSQL_SERVER, MYSQL_USER, MYSQL_PASS, MYSQL_DATABASE);
 
 
 
-function get_vars() {
-	global $form;
-
-	if (isset($_SESSION['sitename'])) {
-		set('sitename', $_SESSION['sitename'].'');
-	}else{
-		set('sitename', SITE_NAME);
-	}
-
-	set('username', $_SESSION['name']);
-	set('form', json_encode($form[$_SESSION['dbprefix']]));
-}
-
-
 
 /********************************************************
  * ROUTERS
@@ -85,53 +71,17 @@ dispatch('/api/:pass/:action/:detail', 'api');
  *******************************************************/
 
 
-function api ($pass, $action, $detail) {
-	if (!login($pass, false)) {
-		return json(array('status'=>'error','message'=>"API Authentication failed"));
-	}
-
-	if ($action === 'get') {
-		get($detail);
-	}
-}
-
-
-
-function is_logged_in() {
-	if (!isset($_SESSION['name']) OR strlen($_SESSION['name'])<1) {
-		$array = array(
-			'status' => 'error',
-			'message' => 'Please authenticate first',
-			// Uncomment the following line to generate random passwords ready to use (see README)
-			//'samplepass' => generateRandomString(100),
-		);
-		echo json_encode($array);
-		die();
-	}
-	return true;
-}
-
-
-
-
-
-
-function home() {
-	is_logged_in();
-	get_vars();
-	set('people', recent());
-	return html('home.html.php');
-}
-
-
-
-
-
+/**
+ * login
+ * Authenticate user
+ * @params (string) User's password
+ * @params (bool) Set as false to avoid redirect to the home page
+ */
 function login($pass, $redirect = true) {
-	global $users;
+	global $users, $form, $c;
 
 	foreach ($users as $key => $user) {
-		if ($pass==$user['pass']) {
+		if ($pass==$user['pass'] && $form[$user['dbprefix']]) { // pass correct & environment exists
 			$_SESSION['name'] = $user['name'];
 			$_SESSION['level'] = $user['level'];
 			$_SESSION['dbprefix'] = $user['dbprefix'];
@@ -150,6 +100,8 @@ function login($pass, $redirect = true) {
 				PRIMARY KEY (`id`)
 			) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
 
+			$result = db($q, $c);
+
 			if ($redirect==true) {
 				header("Location: ".url_for('/'));
 			}else{
@@ -165,7 +117,11 @@ function login($pass, $redirect = true) {
 
 
 
-
+/**
+ * logout
+ * Close user's session
+ * @params () 
+ */
 function logout() {
 	session_destroy();
 	header("Location: ".url_for(''));
@@ -178,27 +134,47 @@ function logout() {
 
 
 
+/**
+ * home
+ * Load the home page as HTML
+ */
+function home() {
 
-
-// Gives a list of recent people (for PHP use only?)
-function recent() {
 	if (!isset($_SESSION['level']) OR strpos($_SESSION['level'], 'r')===-1) {
-		$response = array('status'=>'error','message'=>"Your user cannot read contacts");
+		die('<!doctype html><html><body style="font-family: \'Helvetica Neue\',Helvetica,Arial,sans-serif;"><h1 style="font-weight:100;">You are not logged in</h1></body></html>');
 	}else{
-		global $c;
-		$people = db("SELECT * FROM ".$_SESSION['dbprefix']."people ORDER BY name ASC", $c);
-		foreach ($people as &$person) {
-			$person['form'] = json_decode($person['form'], true);
-			$person['comments'] = json_decode($person['comments'], true);
-		}
+		global $form, $plugins;
+		set('sitename', (isset($_SESSION['sitename'])) ? set('sitename', $_SESSION['sitename']) : set('sitename', SITE_NAME) );
+		set('app_version', SITE_VERSION);
+		set('username', $_SESSION['name']);
+		set('form', json_encode($form[$_SESSION['dbprefix']]));
+
+
+		set('people', search());
+		set('plugins', json_encode($plugins));
+		return html('home.html.php');
+	}
+}
+
+
+
+
+
+/**
+ * api
+ * Authenticates and executes a request all-in-one
+ * @params (string) User's password
+ * @params (string) Action
+ * @params (string) Details of the action
+ */
+function api ($pass, $action, $detail) {
+	if (!login($pass, false)) {
+		return json(array('status'=>'error','message'=>"API Authentication failed"));
 	}
 
-	if ($people) {
-		$response = json_encode($people);
-	}else{
-		$response = array('status'=>'error','message'=>'No results');
+	if ($action === 'get') {
+		return get($detail);
 	}
-	return $response;
 }
 
 
@@ -207,29 +183,28 @@ function recent() {
 
 
 
-
+/**
+ * search
+ * Search people
+ * @params (string) Pass a string to search or empty for all results 
+ */
 function search($s='') {
 	if (!isset($_SESSION['level']) OR strpos($_SESSION['level'], 'r')===-1) {
 		$response = array('status'=>'error','message'=>"Your user cannot search contacts");
 	}else{
 		global $c;
-
+		// Search multiple words
 		$w = explode(' ', $s);
 		foreach ($w as &$wi) {
 			$wi = "(name LIKE  '%".$c->real_escape_string($wi)."%' OR form LIKE  '%".$c->real_escape_string($wi)."%' OR comments LIKE  '%".$c->real_escape_string($wi)."%') ";
 		}
-		$q = "SELECT id, name, form
-FROM ".$_SESSION['dbprefix']."people
-WHERE ". implode(' AND ', $w) ." 
-ORDER BY name ASC 
-LIMIT 0, 50";
-
+		$q = "SELECT id, name, form FROM ".$_SESSION['dbprefix']."people WHERE ". implode(' AND ', $w) ."  ORDER BY name ASC LIMIT 0, 50";
 		$people = db($q, $c);
 
 		foreach($people as &$person) {
 			$person['form'] = json_decode($person['form'], true);
 		}
-
+//var_dump($people);
 		if ($people) {
 			return json($people);
 		}else{
@@ -247,6 +222,11 @@ LIMIT 0, 50";
 
 
 
+/**
+ * get
+ * Get person details
+ * @params (integer/string) Pass either person's ID or a search with just one result
+ */
 function get($detail) {
 	if (!isset($_SESSION['level']) OR strpos($_SESSION['level'], 'r')===-1) {
 		$response = array('status'=>'error','message'=>"Your user cannot read");
@@ -266,7 +246,7 @@ function get($detail) {
 			$response = array('status'=>'error','message'=>'User does not exist');
 		}
 	}
-	echo json($response);
+	return json($response);
 }
 
 
@@ -279,6 +259,10 @@ function get($detail) {
 
 
 
+/**
+ * save
+ * Save person details
+ */
 function save() {
 	// Check if user has enough level to Save
 	if (!isset($_SESSION['level']) OR strpos($_SESSION['level'], 's')===-1) {
@@ -297,7 +281,7 @@ function save() {
 		foreach ($form[$_SESSION['dbprefix']] as $field) {
 			$array[$field['name']] = $_POST[$field['name']];
 		}
-
+//var_dump($array);
 		if ($_POST['id']) { // update details
 			$q = "UPDATE ".$_SESSION['dbprefix']."people SET 
 				form = '".$c->real_escape_string(json_encode($array))."',
@@ -313,7 +297,7 @@ function save() {
 				'".time()."' 
 			);";
 		}
-
+//var_dump($q);
 		$result = db($q, $c);
 
 		if ($result) {
@@ -340,41 +324,11 @@ function save() {
 
 
 
-function comment($id) {
-	// Check if user has enough level to Comment
-	if (!isset($_SESSION['level']) OR strpos($_SESSION['level'], 'c')===-1) {
-		$response = json(array('status'=>'error','message'=>'Your user cannot comment'));
-	}else if (!isset($_POST['comment']) OR $_POST['comment']=='') {
-		json(array('status'=>'error','message'=>'Please write a comment first'));
-	}else{
-		global $c;
-		$comments = db("SELECT comments FROM ".$_SESSION['dbprefix']."people WHERE id = ".$c->real_escape_string($_POST['id'])."", $c);
-		$comments = json_decode($comments[0]['comments'], true);
-
-		array_unshift($comments, array(
-			'user' => $_SESSION['name'],
-			'date' => date('c', time()), // iso 8601 format
-			'text' => $_POST['comment']
-		));
-		$q = "UPDATE ".$_SESSION['dbprefix']."people SET comments = '".$c->real_escape_string(json_encode($comments))."' WHERE id = ".$c->real_escape_string($_POST['id'])."";
-		$result = db($q, $c);
-
-		if ($result) {
-			$response = json($comments);
-		}else{
-			$response = json(array('status'=>'error','message'=>'Could not add comment'));
-		}
-	}
-	return $response;
-}
-
-
-
-
-
-
-
-
+/**
+ * delete
+ * Delete person
+ * @params (integer) Person ID 
+ */
 function delete($id) {
 	if (!isset($_SESSION['level']) OR strpos($_SESSION['level'], 'd')===-1) {
 		$response = json(array('status'=>'error','message'=>"Your user cannot delete"));
@@ -400,6 +354,49 @@ function delete($id) {
 
 
 
+/********************************************************
+ * COMMENTS
+ *******************************************************/
+
+/**
+ * comment
+ * Add a comment to the person
+ * @params (integer) Person ID 
+ */
+function comment($id) {
+	// Check if user has enough level to Comment
+	if (!isset($_SESSION['level']) OR strpos($_SESSION['level'], 'c')===-1) {
+		$response = json(array('status'=>'error','message'=>'Your user cannot comment'));
+	}else if (!isset($_POST['comment']) OR $_POST['comment']=='') {
+		json(array('status'=>'error','message'=>'Please write a comment first'));
+	}else{
+		global $c;
+		$comments = db("SELECT comments FROM ".$_SESSION['dbprefix']."people WHERE id = ".$c->real_escape_string($_POST['id'])."", $c);
+		$comments = json_decode($comments[0]['comments'], true);
+//var_dump($comments);
+		array_unshift($comments, array(
+			'user' => $_SESSION['name'],
+			'date' => date('c', time()), // iso 8601 format
+			'text' => $_POST['comment']
+		));
+		$q = "UPDATE ".$_SESSION['dbprefix']."people SET comments = '".$c->real_escape_string(json_encode($comments))."' WHERE id = ".$c->real_escape_string($_POST['id'])."";
+		$result = db($q, $c);
+
+		if ($result) {
+			$response = json($comments);
+		}else{
+			$response = json(array('status'=>'error','message'=>'Could not add comment'));
+		}
+	}
+	return $response;
+}
+
+
+
+
+
+
+
 
 /********************************************************
  * HELPERS
@@ -412,6 +409,28 @@ function generateRandomString($length = 100) {
 	}
 	return $randomString;
 }
+
+
+
+
+
+
+
+
+
+/********************************************************
+ * LOAD PLUGINS
+ *******************************************************/
+foreach ($plugins as $plugin) {
+	if (file_exists($plugin)) {
+		require_once('plugins/'.$plugin.'/'.$plugin.'.php');
+	}
+}
+
+
+
+
+
 
 
 

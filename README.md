@@ -5,6 +5,8 @@ CRMx is a super-flexible micro-CRM system for personal, freelance and small busi
 - <strong>RESTful API</strong>: Works through a RESTful API which allows third-party services and other software to interact neatly.
 - <strong>Unlimited users & environments</strong>: Allows unlimited users to work in the same or different environments very flexibly (including a User Access Control system (UAC) to define permissions for each user and have maximum control).
 - <strong>Simple setup</strong>: Similar to Sublime Text, all the config is done in <code>config.php</code> which keeps the overall code tiny and much easier to maintain and scale.
+- <strong>Extremely scalable</strong>: CRMx is extremely small, with one PHP, one JS and one CSS files, with inline comments, you can see the code and start hacking it in 5 minutes. Oh, and you can also create CRMx plugins :)
+
 
 
 Screenshots
@@ -54,8 +56,11 @@ Technology
 Installation
 ---------------
 
-1. Open <code>config.php</code> and modify the app settings, MySQL info and prefix, customize the <code>$form</code> array and add your <code>$users</code> and their permissions
-2. Open <code>dump.sql</code>, add your <code>MYSQL_PREFIX</code> (if any) and then import into database
+Open <code>config.php</code> to modify the app settings:
+
+- MySQL info and prefix
+- Customize the <code>$form</code> array
+- Add your <code>$users</code> and their permissions
 
 
 Settings
@@ -72,7 +77,7 @@ User accounts are created by adding them to the <code>$users</code> PHP array. T
 - <strong>name</strong> <small>(string)</small> Full name of the user
 - <strong>pass</strong> <small>(string)</small> Add a very long random alphanumeric string of between 100 and 300 characters (the more the better, check <code>is_logged_in()</code> in the code for a generator)
 - <strong>level</strong> <small>(string)</small> Add flags to allow users certain privileges
-	- <strong>r</strong> <i>read</i>: useful when you want an external partner to submit contacts but not be able to read it (i.e. external lead provider)
+	- <strong>r</strong> <i>read</i>: useful when you want an external partner to submit contacts but not be able to access the CRM (i.e. external lead provider)
 	- <strong>s</strong> <i>save</i>: create and update contacts
 	- <strong>d</strong> <i>delete</i>: can delete contacts
 	- <strong>c</strong> <i>comment</i>: can comment on contacts
@@ -91,7 +96,7 @@ There is no login screen in CRMx. Users bookmark a long URL and click on it to l
 Environments
 ---------------
 
-Environments allow users to work on separated CRMx (with their own contacts and form fields) while using the same app. To enable more environments, import the table in <code>dump.sql</code> with a new prefix and add that prefix to a user. Then add another array in <code>$form</code>. Simple as that.
+Environments allow users to work on separated CRMx (with their own contacts and form fields) while using the same app. Add that prefix to a user and another array in <code>$form</code>. Simple as that.
 
 
 
@@ -241,6 +246,19 @@ REST API
 
 
 
+Plugins
+--------------
+
+With plugins you can add extra functionality to CRMx without needing to modify the core files. Creating plugins is extremely easy and you can run PHP, JavaScript and/or CSS code. To create a plugin, add a new folder to the <code>plugins</code> folder and files, all with your plugin name:
+
+<pre>/plugins/salesforce
+	salesforce.php
+	salesforce.js
+	salesforce.css</pre>
+
+All files are optional, if you want to create a theme then a single CSS file should be enough. If you want to have a file that doesn't run automatically then name it differently than the plugin name.
+
+The last step is to add the plugin name to the <code>$plugins</code> array in <code>config.php</code>.
 
 
 
@@ -266,14 +284,25 @@ MySQL table details
 Changelog
 ----------------
 
+### 29 March 2013
+
+- Generate MySQL tables automatically
+- Multiword search
+- Sort by column
+- Code optimization
+- Code documentation and inline comments
+
+
 ### 28 March 2013
 
-- Improved docs, added screenshots
+- CRMx plugins to add extra functionality (canned responses, SalesForce integration, etc.)
 - Table view instead of Sidebar
 - Redesigned top nav
 - Search also searches comments now
 - Added icons and buttons
 - Form is now two-column instead of one
+- Smart links in detail view
+- Improved docs, added screenshots
 - Many more improvements and small tweaks
 - Fixed bugs with notification message
 - Other bugs fixed
@@ -289,10 +318,9 @@ Changelog
 To Do
 ----------------
 - Multilanguage support
-- Generate tables automatically
-- Smart links in detail view
 - Use same date format along MySQL
-- Delete comments
+- Edit/Delete comments
+- Smooth scrolling anchors up/down page
 
 
 License
@@ -307,3 +335,11 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+Credits
+---------------
+
+Author: <a href="http://xaviesteve.com/">Xavi Esteve</a> (<a href="http://twitter.com/xaviesteve">@xaviesteve</a>)
+
+Icons by Glyphicons
