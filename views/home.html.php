@@ -27,8 +27,8 @@
 						<li>
 							<form class="navbar-form">
 								<a href="#top" class="btn" title="View table"><i class="icon-th"></i></a>
-								<a href="#people-foot" class="btn" title="View details"><i class="icon-user"></i></a>
-								<a href="#people-foot" class="btn btn-primary clearform" title="Add new contact"><i class="icon-plus icon-white"></i></a>
+								<a href="#main" class="btn" title="View details"><i class="icon-user"></i></a>
+								<a href="#main" class="btn btn-primary clearform" title="Add new contact"><i class="icon-plus icon-white"></i></a>
 								<input id="s" class="input-large search-query" type="text" placeholder="Start typing to search&hellip;">
 							</form>
 						</li>
@@ -43,7 +43,7 @@
 
 	<!-- CONTAINER -->
 
-	<div class="container-fluid">
+	<div id="table" class="container-fluid">
 		<div class="row-fluid">
 
 			<div class="span12">
@@ -52,7 +52,6 @@
 						<tr><th class="active" data-name="name">Name</th><th data-name="title">Title</th></tr>
 					</thead>
 					<tbody></tbody>
-					<tfoot id="people-foot"></tfoot>
 				</table>
 				<!-- <small><strong>Sort by: </strong> <a href="#">Name</a> / <a href="#">Recent</a></small> -->
 			</div>
@@ -156,6 +155,7 @@
 				sitename: '<?=$sitename?>',
 				username: '<?=$username?>',
 				plugins: <?=$plugins?>
+				
 			};
 			crmx.form = <?=$form?>;
 			crmx.people = <?=$people?>;

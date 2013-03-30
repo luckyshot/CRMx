@@ -289,6 +289,7 @@ Changelog
 - Generate MySQL tables automatically
 - Multiword search
 - Sort by column
+- Delete comments
 - Code optimization
 - Code documentation and inline comments
 
@@ -319,7 +320,6 @@ To Do
 ----------------
 - Multilanguage support
 - Use same date format along MySQL
-- Edit/Delete comments
 - Smooth scrolling anchors up/down page
 
 
@@ -343,3 +343,4 @@ Credits
 Author: <a href="http://xaviesteve.com/">Xavi Esteve</a> (<a href="http://twitter.com/xaviesteve">@xaviesteve</a>)
 
 Icons by Glyphicons
+cons

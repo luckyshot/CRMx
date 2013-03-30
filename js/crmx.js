@@ -314,7 +314,7 @@ var crmx = {
 
 				crmx.load.comments(response.comments);
 
-				document.location = '#people-foot';
+				document.location = '#main';
 
 			}else{
 				crmx.notification( response.message, response.status );

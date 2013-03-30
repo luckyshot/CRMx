@@ -15,7 +15,7 @@ body {font-size:12px;padding-top: 60px;padding-bottom: 40px;}
 .lead {margin:0;}
 #title {border:none;box-shadow:none;font-size: 21px;font-weight: 200;height:auto;padding:.3em;width: 100%;}
 
-
+#table{min-height:800px;}
 
 
 
@@ -29,16 +29,16 @@ body {font-size:12px;padding-top: 60px;padding-bottom: 40px;}
 #people-table th {cursor:pointer;}​
 #people-table th.active::after {content:" \25BE";}​
 
+#main {padding-top:60px;}
+
 #form .control-group {margin-left: 0;}
 #form .input-append input {max-width: 65%;}
 label {margin-bottom: 0;font-size: 90%;}
 
 
-#c {height: 1em;transition: .3s ease height;}
-#c:focus,
-#c:active {height:10em;}
+#c {height: 6em;transition: .3s ease height;}
 #comments {margin-top:2em;}
-
+.comment-delete {color: #bd362f;text-decoration:none;}
 
 
 footer {margin-top:400px;}
@@ -51,4 +51,15 @@ footer {margin-top:400px;}
 }
 
 
-@media (max-height: 600px) {footer{margin-top:100px;}}
+@media (max-height: 600px) {
+	#table{min-height:600px;}
+	footer{margin-top:100px;}
+}
+@media (min-height: 800px) {
+	#table{min-height:1000px;}
+	footer{margin-top:600px;}
+}
+
+
+
+
