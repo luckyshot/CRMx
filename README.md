@@ -53,6 +53,13 @@ Technology
 
 
 
+Settings
+---------------
+
+There is no Settings menu or user accounts, all is done in PHP variables (like Sublime Text) in the <code>config.php</code> file, which makes the code app a lot smaller as well as easy to administer, maintain and scale.
+
+
+
 Installation
 ---------------
 
@@ -62,11 +69,6 @@ Open <code>config.php</code> to modify the app settings:
 - Customize the <code>$form</code> array
 - Add your <code>$users</code> and their permissions
 
-
-Settings
----------------
-
-There is no Settings menu or user accounts, all is done in PHP variables (like Sublime Text) in the <code>config.php</code> file, which makes the code app a lot smaller as well as easy to administer, maintain and scale.
 
 
 User accounts
@@ -146,32 +148,59 @@ To skip a form field to show in the main table, set the <code>hidden</code> prop
 REST API
 ---------------
 
-<table>
-	<thead>
-		<tr>
-			<th>URI</th>
-			<th>Request</th>
-			<th>Response</th>
-			<th>Output</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td>/</td>
-			<td>GET</td>
-			<td>HTML</td>
-			<td>The home page in HTML format (including the default people and form JSON lists embedded to save server requests).</td>
-		</tr>
-		<tr>
-			<td>/login/:pass</td>
-			<td>GET<br><pre>pass (string)</pre></td>
-			<td>(Redirect to <code>/</code>)</td>
-			<td>On success redirects to <code>/</code>, on fail shows a message</td>
-		</tr>
-		<tr>
-			<td>/search/:q</td>
-			<td>GET<br><pre>q (string)</pre></td>
-			<td>JSON<br><pre>[
+### Home
+
+Request URI: <code>/</code>
+
+Request type: <code>GET</code>
+
+Response format: <code>HTML</code>
+
+#### Request data
+
+(none)
+
+#### Response
+
+The home page in HTML format (including the default people and form JSON lists embedded to save server requests).
+
+
+
+### Login
+
+Request URI: <code>/login/:pass</code>
+
+Request type: <code>GET</code>
+
+Response format: <code>JSON</code>
+
+#### Request data
+
+- <code>pass</code> (string)
+
+#### Response
+
+On success redirects to Home, on fail shows a message.
+
+
+
+### Search
+
+Searches people for that query and returns a JSON array.
+
+Request URI: <code>/search/:q</code>
+
+Request type: <code>GET</code>
+
+Response format: <code>JSON</code>
+
+#### Request data
+
+- <code>q</code> (string)
+
+#### Response
+
+<pre>[
   {
     "id":"46",
     "name":"Richard",
@@ -193,56 +222,143 @@ REST API
       // ...
     }
   }
-]</pre></td>
-			<td>Searches people for that query and returns a JSON array.</td>
-		</tr>
-		<tr>
-			<td>/get/:id</td>
-			<td>GET<br><pre>id (string)</pre></td>
-			<td>JSON<br><pre>{
-  "id":"46",
-  "name":"Richard",
-  "form":{
-    "title":"CEO",
-    "group":"London",
-    "type":"Provider",
-    "email":"",
+]</pre>
+
+
+
+### Load person
+
+You can pass an ID or a name, returns results for a single person (if more than one match returns the most recently modified).
+
+Request URI: <code>/get/:id</code>
+
+Request type: <code>GET</code>
+
+Response format: <code>JSON</code>
+
+#### Request data
+
+- <code>id</code> (string)
+
+#### Response
+
+<pre>{
+  "id": "46",
+  "name": "Richard",
+  "form": {
+    "title": "CEO",
+    "group": "London",
+    "type": "Provider",
+    "email": "",
     // ...
   },
   "comments":[
     {
-      "user":"Xavi Esteve",
-      "date":"2013-03-24T16:03:19+00:00",
-      "text":"..."
+      "user": "Xavi Esteve",
+      "date": "2013-03-24T16:03:19+00:00",
+      "text": "..."
     }
   ],
-  "created":"1364140289",
-  "updated":"1364140289"
-}</pre></td>
-			<td>You can pass an ID or a name, returns results.</td>
-		</tr>
-		<tr>
-			<td>/save</td>
-			<td>POST<br><pre>id (integer)</pre></td>
-			<td>JSON</td>
-			<td>Pass the id of the person.</td>
-		</tr>
-		<tr>
-			<td>/delete</td>
-			<td>DELETE<br><pre>id (integer)</pre></td>
-			<td>JSON</td>
-			<td>Pass the id of the person.</td>
-		</tr>
-	</tbody>
-</table>
+  "created": "1364140289",
+  "updated": "1364140289"
+}</pre>
+
+
+### Save person
+
+Request URI: <code>/</code>
+
+Request type: <code>POST</code>
+
+Response format: <code>JSON</code>
+
+#### Request data
+
+- <code>id</code> (string)
+
+#### Response
+
+<pre>[
+  {
+    "status": "success" OR "error",
+    "message": "Contact saved successfully."
+}
+]</pre>
 
 
 
-#### Status types
+### Delete person
 
-- <code>success</code>
-- <code>error</code> (accompanied by a <code>message</code>)
-- <code>info</code>
+Request URI: <code>/delete</code>
+
+Request type: <code>DELETE</code>
+
+Response format: <code>JSON</code>
+
+#### Request data
+
+- <code>id</code> (string)
+
+#### Response
+
+<pre>[
+  {
+    "status": "success" OR "error",
+    "message": "Contact deleted successfully."
+}
+]</pre>
+
+
+
+
+### Add comment
+
+Request URI: <code>/comment</code>
+
+Request type: <code>POST</code>
+
+Response format: <code>JSON</code>
+
+#### Request data
+
+- <code>id</code> (integer)
+- <code>comment</code> (string)
+
+#### Response
+
+<pre>[
+  {
+    "status": "success" OR "error",
+    "message": "Comment added."
+}
+]</pre>
+
+
+
+
+### Delete comment
+
+Request URI: <code>/comment/:id</code>
+
+Request type: <code>DELETE</code>
+
+Response format: <code>JSON</code>
+
+#### Request data
+
+- <code>id</code> (integer)
+
+#### Response
+
+<pre>[
+  {
+    "status": "success" OR "error",
+    "message": "Comment deleted."
+}
+]</pre>
+
+
+
 
 
 
@@ -300,6 +416,8 @@ Changelog
 ### 1 April 2013
 - Multilanguage support
 - Code clean up and improvements
+- Favicon
+
 
 ### 29 March 2013
 
@@ -337,6 +455,7 @@ To Do
 ----------------
 - Use same date format along MySQL
 - Smooth scrolling anchors up/down page
+- Write tests
 
 
 License
@@ -344,7 +463,7 @@ License
 
 CRMx has been created by Xavi Esteve and is licensed under a MIT License.
 
-Copyright (c) 2013 Xavi Esteve
+Copyright &copy; 2013 Xavi Esteve
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
@@ -356,6 +475,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 Credits
 ---------------
 
-Author: <a href="http://xaviesteve.com/">Xavi Esteve</a> (<a href="http://twitter.com/xaviesteve">@xaviesteve</a>)
+Author: <strong><a href="http://xaviesteve.com/">Xavi Esteve</a></strong> (<a href="http://twitter.com/xaviesteve">@xaviesteve</a>)
 
-Icons by Glyphicons
+- Icons by Glyphicons (attribution)
+- Twitter Bootstrap by Twitter, Inc (Apache license)
+- Limonade PHP micro framework by Fabrice Luraine (MIT license)
+- EasyDate by Parsha Pourkhomami (MIT license)
+- <a href="https://github.com/bryanwoods/autolink-js">AutoLink</a> by Bryan Woods (open sourced)
+- Smooth Scrolling
