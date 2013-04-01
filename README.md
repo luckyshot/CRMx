@@ -148,57 +148,39 @@ To skip a form field to show in the main table, set the <code>hidden</code> prop
 REST API
 ---------------
 
-### Home
+### Home <code>/</code>
 
-Request URI: <code>/</code>
+##### Request data (<code>GET</code>)
 
-Request type: <code>GET</code>
+<i>(none)</i>
 
-Response format: <code>HTML</code>
-
-#### Request data
-
-(none)
-
-#### Response
+##### Response (<code>HTML</code>)
 
 The home page in HTML format (including the default people and form JSON lists embedded to save server requests).
 
 
 
-### Login
+### Login <code>/login/:pass</code>
 
-Request URI: <code>/login/:pass</code>
-
-Request type: <code>GET</code>
-
-Response format: <code>JSON</code>
-
-#### Request data
+##### Request data (GET)
 
 - <code>pass</code> (string)
 
-#### Response
+##### Response (<code>JSON</code>)
 
 On success redirects to Home, on fail shows a message.
 
 
 
-### Search
+### Search <code>/search/:q</code>
 
 Searches people for that query and returns a JSON array.
 
-Request URI: <code>/search/:q</code>
-
-Request type: <code>GET</code>
-
-Response format: <code>JSON</code>
-
-#### Request data
+##### Request data (<code>GET</code>)
 
 - <code>q</code> (string)
 
-#### Response
+##### Response <code>JSON</code>
 
 <pre>[
   {
@@ -226,21 +208,15 @@ Response format: <code>JSON</code>
 
 
 
-### Load person
+### Load person <code>/get/:id</code>
 
 You can pass an ID or a name, returns results for a single person (if more than one match returns the most recently modified).
 
-Request URI: <code>/get/:id</code>
-
-Request type: <code>GET</code>
-
-Response format: <code>JSON</code>
-
-#### Request data
+##### Request data (<code>GET</code>)
 
 - <code>id</code> (string)
 
-#### Response
+##### Response (<code>JSON</code>)
 
 <pre>{
   "id": "46",
@@ -264,19 +240,13 @@ Response format: <code>JSON</code>
 }</pre>
 
 
-### Save person
+### Save person <code>/save</code>
 
-Request URI: <code>/</code>
-
-Request type: <code>POST</code>
-
-Response format: <code>JSON</code>
-
-#### Request data
+##### Request data (<code>POST</code>)
 
 - <code>id</code> (string)
 
-#### Response
+##### Response (<code>JSON</code>)
 
 <pre>[
   {
@@ -287,19 +257,13 @@ Response format: <code>JSON</code>
 
 
 
-### Delete person
+### Delete person <code>/delete</code>
 
-Request URI: <code>/delete</code>
-
-Request type: <code>DELETE</code>
-
-Response format: <code>JSON</code>
-
-#### Request data
+##### Request data (<code>DELETE</code>)
 
 - <code>id</code> (string)
 
-#### Response
+##### Response (<code>JSON</code>)
 
 <pre>[
   {
@@ -311,20 +275,14 @@ Response format: <code>JSON</code>
 
 
 
-### Add comment
+### Add comment <code>/comment</code>
 
-Request URI: <code>/comment</code>
-
-Request type: <code>POST</code>
-
-Response format: <code>JSON</code>
-
-#### Request data
+##### Request data (<code>POST</code>)
 
 - <code>id</code> (integer)
 - <code>comment</code> (string)
 
-#### Response
+##### Response (<code>JSON</code>)
 
 <pre>[
   {
@@ -336,19 +294,13 @@ Response format: <code>JSON</code>
 
 
 
-### Delete comment
+### Delete comment <code>/comment/:id</code>
 
-Request URI: <code>/comment/:id</code>
-
-Request type: <code>DELETE</code>
-
-Response format: <code>JSON</code>
-
-#### Request data
+##### Request data (<code>DELETE</code>)
 
 - <code>id</code> (integer)
 
-#### Response
+##### Response (<code>JSON</code>)
 
 <pre>[
   {
