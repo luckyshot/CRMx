@@ -160,6 +160,10 @@ The home page in HTML format (including the default people and form JSON lists e
 
 
 
+<hr>
+
+
+
 ### Login <code>/login/:pass</code>
 
 ##### Request data (GET)
@@ -169,6 +173,10 @@ The home page in HTML format (including the default people and form JSON lists e
 ##### Response (<code>JSON</code>)
 
 On success redirects to Home, on fail shows a message.
+
+
+
+<hr>
 
 
 
@@ -208,6 +216,10 @@ Searches people for that query and returns a JSON array.
 
 
 
+<hr>
+
+
+
 ### Load person <code>/get/:id</code>
 
 You can pass an ID or a name, returns results for a single person (if more than one match returns the most recently modified).
@@ -240,6 +252,11 @@ You can pass an ID or a name, returns results for a single person (if more than 
 }</pre>
 
 
+
+<hr>
+
+
+
 ### Save person <code>/save</code>
 
 ##### Request data (<code>POST</code>)
@@ -254,6 +271,10 @@ You can pass an ID or a name, returns results for a single person (if more than 
     "message": "Contact saved successfully."
 }
 ]</pre>
+
+
+
+<hr>
 
 
 
@@ -274,6 +295,9 @@ You can pass an ID or a name, returns results for a single person (if more than 
 
 
 
+<hr>
+
+
 
 ### Add comment <code>/comment</code>
 
@@ -291,6 +315,9 @@ You can pass an ID or a name, returns results for a single person (if more than 
 }
 ]</pre>
 
+
+
+<hr>
 
 
 
