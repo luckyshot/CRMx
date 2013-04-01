@@ -74,34 +74,10 @@ dispatch('/api/:pass/:action/:detail', 'api');
  *******************************************************/
 
 /**
- * api
- * Authenticates and executes a request all-in-one
- * @params (string) User's password
- * @params (string) Action
- * @params (string) Details of the action
- */
-function api ($pass, $action, $detail) {
-	if (!login($pass, false)) {
-		return json(array('status'=>'error','message'=>"Authentication failed"));
-	}
-	// TODO: There may be a better way to do this and not repeat ourselves
-	if ($action === 'search') { return search($detail);
-	}else if ($action === 'get') { return get($detail);
-	}else if ($action === 'save') { return save();
-	}else if ($action === 'delete') { return delete($detail);
-	}else if ($action === 'comment') { return comment($detail);
-	}else{ return json(array('status'=>'error','message'=>"Action not recognized")); }
-}
-
-
-
-
-
-/**
  * login
  * Authenticate user
- * @params (string) User's password
- * @params (bool) Set as false to avoid redirect to the home page
+ * @param (string) User's password
+ * @param (bool) Set as false to avoid redirect to the home page
  */
 function login($pass, $redirect = true) {
 	global $users, $form, $c;
@@ -111,6 +87,11 @@ function login($pass, $redirect = true) {
 			$_SESSION['name'] = $user['name'];
 			$_SESSION['level'] = $user['level'];
 			$_SESSION['dbprefix'] = $user['dbprefix'];
+			if (isset($user['lang'])) {
+				$_SESSION['lang'] = $user['lang'];
+			}else{
+				$_SESSION['lang'] = LANG_DEFAULT;
+			}
 			if (isset($user['sitename'])) {
 				$_SESSION['sitename'] = $user['sitename'];
 			}
@@ -129,7 +110,8 @@ function login($pass, $redirect = true) {
 			$result = db($q, $c);
 
 			if ($redirect==true) {
-				header("Location: ".url_for('/'));
+				header("Location: ".url_for('/')); // send_header
+				return true;
 			}else{
 				return true;
 			}
@@ -146,12 +128,36 @@ function login($pass, $redirect = true) {
 /**
  * logout
  * Close user's session
- * @params () 
+ * @param () 
  */
 function logout() {
 	session_destroy();
-	header("Location: ".url_for(''));
-	die();
+	redirect_to("Location: ".url_for('')); // send_header
+	halt();
+}
+
+
+
+
+
+/**
+ * api
+ * Authenticates and executes a request all-in-one
+ * @param (string) User's password
+ * @param (string) Action
+ * @param (string) Details of the action
+ */
+function api ($pass, $action, $detail) {
+	if (!login($pass, false)) {
+		return json(array('status'=>'error','message'=>$lang['authfailed']));
+	}
+	// TODO: There may be a better way to do this and not repeat ourselves
+	if ($action === 'search') { return search($detail);
+	}else if ($action === 'get') { return get($detail);
+	}else if ($action === 'save') { return save();
+	}else if ($action === 'delete') { return delete($detail);
+	}else if ($action === 'comment') { return comment($detail);
+	}else{ return json(array('status'=>'error','message'=>$lang['actionnotrecognized'])); }
 }
 
 
@@ -165,19 +171,19 @@ function logout() {
  * Load the home page as HTML
  */
 function home() {
-
+	global $lang;
 	if (!isset($_SESSION['level']) OR strpos($_SESSION['level'], 'r')===-1) {
-		die('<!doctype html><html><body style="font-family: \'Helvetica Neue\',Helvetica,Arial,sans-serif;"><h1 style="font-weight:100;">You are not logged in</h1></body></html>');
+		html('<!doctype html><html><body style="font-family: \'Helvetica Neue\',Helvetica,Arial,sans-serif;"><h1 style="font-weight:100;">'.$lang['notloggedin'].'</h1></body></html>');
+		halt();
 	}else{
 		global $form, $plugins;
 		set('sitename', (isset($_SESSION['sitename'])) ? set('sitename', $_SESSION['sitename']) : set('sitename', SITE_NAME) );
 		set('app_version', SITE_VERSION);
 		set('username', $_SESSION['name']);
 		set('form', json_encode($form[$_SESSION['dbprefix']]));
-
-
 		set('people', search());
 		set('plugins', json_encode($plugins));
+		set('lang', $lang);
 		return html('home.html.php');
 	}
 }
@@ -194,7 +200,7 @@ function home() {
 /**
  * search
  * Search people
- * @params (string) Pass a string to search or empty for all results 
+ * @param (string) Pass a string to search or empty for all results 
  */
 function search($s='') {
 	if (!isset($_SESSION['level']) OR strpos($_SESSION['level'], 'r')===-1) {
@@ -233,7 +239,7 @@ function search($s='') {
 /**
  * get
  * Get person details
- * @params (integer/string) Pass either person's ID or a search with just one result
+ * @param (integer/string) Pass either person's ID or a search with just one result
  */
 function get($detail) {
 	if (!isset($_SESSION['level']) OR strpos($_SESSION['level'], 'r')===-1) {
@@ -335,7 +341,7 @@ function save() {
 /**
  * delete
  * Delete person
- * @params (integer) Person ID 
+ * @param (integer) Person ID 
  */
 function delete($id) {
 	if (!isset($_SESSION['level']) OR strpos($_SESSION['level'], 'd')===-1) {
@@ -369,14 +375,15 @@ function delete($id) {
 /**
  * comment
  * Add a comment to the person
- * @params (integer) Person ID 
+ * @param (integer) Person ID 
  */
 function comment($id) {
+	global $lang;
 	// Check if user has enough level to Comment
 	if (!isset($_SESSION['level']) OR strpos($_SESSION['level'], 'c')===-1) {
 		$response = json(array('status'=>'error','message'=>'Your user cannot comment'));
 	}else if (!isset($_POST['comment']) OR $_POST['comment']=='') {
-		json(array('status'=>'error','message'=>'Please write a comment first'));
+		json(array('status'=>'error','message'=>$lang['writecommentfirst']));
 	}else{
 		global $c;
 		$comments = db("SELECT comments FROM ".$_SESSION['dbprefix']."people WHERE id = ".$c->real_escape_string($_POST['id'])."", $c);
@@ -401,6 +408,11 @@ function comment($id) {
 }
 
 
+/**
+ * commentdelete
+ * Delete comment
+ * @param (integer) Comment ID 
+ */
 function commentdelete($id) {
 	if (!isset($_SESSION['level']) OR strpos($_SESSION['level'], 'd')===-1) {
 		$response = json(array('status'=>'error','message'=>"Your user cannot delete comments"));
@@ -411,7 +423,7 @@ function commentdelete($id) {
 		$person[0]['comments'] = json_decode($person[0]['comments'], true);
 		// remove from array
 		foreach($person[0]['comments'] as $key => $comment) {
-			if ($comment['id']=='mk_47kWpdWGpGIZu$G4V') {
+			if ($comment['id']==$id) {
 				unset($person[0]['comments'][$key]);
 				break;
 			}
@@ -449,6 +461,23 @@ function generateRandomString($length = 100) {
 	return $randomString;
 }
 
+
+
+
+
+/********************************************************
+ * LANG
+ *******************************************************/
+function initialize() {
+	global $lang;
+	//echo $_SESSION['lang'];
+	 if (isset($_SESSION['lang'])) {
+		require('lang/'.$_SESSION['lang'].'.php');
+		//echo file_get_contents('lang/'.$_SESSION['lang'].'.php');
+	 }else{
+	 	require('lang/'.LANG_DEFAULT.'.php');
+	 }
+}
 
 
 

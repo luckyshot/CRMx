@@ -26,13 +26,14 @@ option('base_uri', '/'); // '/' or same as the RewriteBase in your .htaccess
 date_default_timezone_set('Europe/London');
 
 define("SITE_NAME", "CRMx"); // Default sitename when none specified in environments
-define("SITE_VERSION", "0.2.3b");
+define("SITE_VERSION", "0.2.6b");
 
 define("MYSQL_SERVER", "localhost");
 define("MYSQL_USER", "user");
 define("MYSQL_PASS", "pass");
 define("MYSQL_DATABASE", "database");
 
+define("LANG_DEFAULT", "en_us"); // Default language
 
 // Plugin list
 $plugins = array(/*'test'*/);

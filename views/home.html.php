@@ -21,19 +21,19 @@
 				<a class="brand" href="/"><?=$sitename?></a>
 				<div class="nav-collapse collapse">
 					<p class="navbar-text pull-right">
-						<strong title="Logged in as <?=$username?>"><?=$username?></strong> <a href="/logout" class="navbar-link" title="Logout"><i class="icon-lock"></i></a>
+						<strong title="<?=$lang['loggedinas']?> <?=$username?>"><?=$username?></strong> <a href="/logout" class="navbar-link" title="<?=$lang['logout']?>"><i class="icon-lock"></i></a>
 					</p>
 					<ul class="nav">
 						<li>
 							<form class="navbar-form">
-								<a href="#top" class="btn" title="View table"><i class="icon-th"></i></a>
-								<a href="#main" class="btn" title="View details"><i class="icon-user"></i></a>
-								<a href="#main" class="btn btn-primary clearform" title="Add new contact"><i class="icon-plus icon-white"></i></a>
-								<input id="s" class="input-large search-query" type="text" placeholder="Start typing to search&hellip;">
+								<a href="#top" class="btn" title="<?=$lang['viewtable']?>"><i class="icon-th"></i></a>
+								<a href="#main" class="btn" title="<?=$lang['viewdetails']?>"><i class="icon-user"></i></a>
+								<a href="#main" class="btn btn-primary clearform" title="<?=$lang['addnewcontact']?>"><i class="icon-plus icon-white"></i></a>
+								<input id="s" class="input-large search-query" type="text" placeholder="<?=$lang['searchplaceholder']?>&hellip;">
 							</form>
 						</li>
 						<li class="divider-vertical"></li>
-						<li><a href="/#top" title="Show all" class="refresh"><i class="icon-refresh"></i></a></li>
+						<li><a href="/#top" title="<?=$lang['showall']?>" class="refresh"><i class="icon-refresh"></i></a></li>
 					</ul>
 				</div><!--/.nav-collapse -->
 			</div>
@@ -49,11 +49,10 @@
 			<div class="span12">
 				<table id="people-table" class="table table-striped table-hover table-condensed">
 					<thead>
-						<tr><th class="active" data-name="name">Name</th><th data-name="title">Title</th></tr>
+						<tr><th class="active" data-name="name"><?=$lang['name']?></th><th data-name="title"><?=$lang['title']?></th></tr>
 					</thead>
 					<tbody></tbody>
 				</table>
-				<!-- <small><strong>Sort by: </strong> <a href="#">Name</a> / <a href="#">Recent</a></small> -->
 			</div>
 
 		</div>
@@ -74,12 +73,12 @@
 
 				<div class="row-fluid">
 					<div class="span10">
-						<input type="text" id="name" placeholder="Name">
+						<input type="text" id="name" placeholder="<?=$lang['name']?>">
 						<input type="hidden" id="id">
-						<p class="lead"><input type="text" id="title" placeholder="Title or note"></p>
+						<p class="lead"><input type="text" id="title" placeholder="<?=$lang['title']?>"></p>
 					</div>
 					<div class="span2">
-						<p class="pull-right"><a class="save btn btn-success hide" href="#">Save contact</a></p>
+						<p class="pull-right"><a class="save btn btn-success hide" href="#"><?=$lang['savecontact']?></a></p>
 					</div>
 				</div>
 
@@ -92,8 +91,8 @@
 						</div>
 
 						<p>
-							<a href="#" class="save btn btn-success hide">Save contact</a>
-							<a href="#" id="delete" class="pull-right btn btn-mini btn-danger hide">Delete contact</a>
+							<a href="#" class="save btn btn-success hide"><?=$lang['contactsave']?></a>
+							<a href="#" id="delete" class="pull-right btn btn-mini btn-danger hide"><?=$lang['contactdelete']?></a>
 						</p>
 
 					</div><!--/span-->
@@ -101,10 +100,10 @@
 
 
 						<div id="commentbox" class="hide">
-							<label>Comments</label>
+							<label><?=$lang['comments']?></label>
 							
 							<textarea id="c" class="span12" rows="3"></textarea>
-							<p><a href="#" id="c_button" class="btn pull-right">Add comment</a></p>
+							<p><a href="#" id="c_button" class="btn pull-right"><?=$lang['commentadd']?></a></p>
 						</div>
 
 						<div id="comments">
@@ -119,7 +118,7 @@
 		</div><!--/row-->
 
 
-		<div id="notification" class="alert hide" title="Click to close"></div>
+		<div id="notification" class="alert hide" title="<?=$lang['clicktoclose']?>"></div>
 
 
 		<footer>
@@ -128,10 +127,10 @@
 
 			<div class="row-fluid">
 				<div class="span6">
-					<p><small>&copy;  <?=date('Y')?> CRMx <?=$app_version?> by <a href="http://xaviesteve.com" target="_blank">Xavi</a></small></p>
+					<p><small>&copy; <?=date('Y')?> CRMx <?=$app_version?> <?=$lang['by']?> <a href="http://xaviesteve.com" target="_blank">Xavi</a></small></p>
 				</div>
 				<div class="span6">
-					<p class="tr"><a href="#top">Back to top</a></p>
+					<p class="tr"><a href="#top"><?=$lang['backtotop']?></a></p>
 				</div>
 			</div>
 		</footer>
@@ -139,7 +138,6 @@
 	</div><!--/.fluid-container-->
 
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-
 
 	<!--<script src="js/script.js?v=<?=$app_version?>"></script>-->
 	<script src="js/bootstrap-collapse.js"></script>
@@ -154,7 +152,8 @@
 			crmx.config = {
 				sitename: '<?=$sitename?>',
 				username: '<?=$username?>',
-				plugins: <?=$plugins?>
+				plugins: <?=$plugins?>,
+				lang: <?=json_encode($lang)?>
 				
 			};
 			crmx.form = <?=$form?>;

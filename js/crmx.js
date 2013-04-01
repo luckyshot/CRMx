@@ -91,13 +91,13 @@ var crmx = {
 
 					// Add special button shortcuts
 					if (form[i].type==='email') {
-						form[i].html += '<a class="btn smart-link" data-smart="email" href="#" title="Email contact"><i class="icon-envelope"></i></a></div>';
+						form[i].html += '<a class="btn smart-link" data-smart="email" href="#" title="'+crmx.config.lang.emailcontact+'"><i class="icon-envelope"></i></a></div>';
 					}else if (form[i].type==='search') {
-						form[i].html += '<a class="btn smart-link" data-smart="search" href="#" title="Search in Google"><i class="icon-search"></i></a></div>';
+						form[i].html += '<a class="btn smart-link" data-smart="search" href="#" title="'+crmx.config.lang.searchgoogle+'"><i class="icon-search"></i></a></div>';
 					}else if (form[i].type==='tel') {
-						form[i].html += '<a class="btn smart-link" data-smart="call" href="#" title="Call contact"><i class="icon-bullhorn"></i></a></div>';
+						form[i].html += '<a class="btn smart-link" data-smart="call" href="#" title="'+crmx.config.lang.callcontact+'"><i class="icon-bullhorn"></i></a></div>';
 					}else if (form[i].type==='url') {
-						form[i].html += '<a class="btn smart-link" data-smart="url" href="#" title="Visit website"><i class="icon-globe"></i></a></div>';
+						form[i].html += '<a class="btn smart-link" data-smart="url" href="#" title="'+crmx.config.lang.visitwebsite+'"><i class="icon-globe"></i></a></div>';
 					}
 				}
 
@@ -176,7 +176,7 @@ var crmx = {
 		comments: function(comments) {"use strict";
 			$('#comments').html('');
 			for(var i in comments) {
-				$('#comments').append('<blockquote>'+comments[i].text.autoLink()+'<small><em class="easydate">'+comments[i].date+'</em> by <strong>'+comments[i].user+'</strong> <a href="#" class="comment-delete" data-id="'+comments[i].id+'" title="Delete comment">&times;</a></small></blockquote>');
+				$('#comments').append('<blockquote>'+comments[i].text.autoLink()+'<small><em class="easydate">'+comments[i].date+'</em> '+crmx.config.lang.by+' <strong>'+comments[i].user+'</strong> <a href="#" class="comment-delete" data-id="'+comments[i].id+'" title="'+crmx.config.lang.deletecomment+'">&times;</a></small></blockquote>');
 			}
 			$(".easydate").easydate();
 		}
@@ -197,7 +197,7 @@ var crmx = {
 	 * Saves or Creates a person details
 	 */
 	save: function(){"use strict";
-		crmx.notification('Loading&hellip;');
+		crmx.notification(crmx.config.lang.loading);
 		var data = {
 			id: $('#id').val(),
 			name: $('#name').val(),
@@ -215,7 +215,7 @@ var crmx = {
 		}).done(function( response ) {
 			crmx.notification( response.message, response.status );
 			if (response.status==='success') {
-				crmx.notification('Saved', 'success');
+				crmx.notification(crmx.config.lang.saved, 'success');
 				$('.save').fadeOut();
 				$('#delete').fadeIn();
 				$('#commentbox').fadeIn();
@@ -236,7 +236,7 @@ var crmx = {
 	 */
 	remove: function(id) {"use strict";
 		if (!id) {return false;}
-		if (confirm('Are you sure you want to delete this contact?')===true) {
+		if (confirm(crmx.config.lang.contactdeleteconfirm)===true) {
 			crmx.notification('Deleting&hellip;');
 			$.ajax({
 				type: "DELETE",
@@ -268,7 +268,7 @@ var crmx = {
 	 * @params (string) Comment
 	 */
 	comment: function(id, comment) {"use strict";
-		crmx.notification('Commenting&hellip;');
+		crmx.notification(''+crmx.config.lang.commenting+'&hellip;');
 		$.ajax({
 			type: "POST",
 			url: "comment",
@@ -290,7 +290,7 @@ var crmx = {
 	 * @params (integer) ID of the person
 	 */
 	get: function(id) {"use strict";
-		crmx.notification('Loading&hellip;');
+		crmx.notification(crmx.config.lang.loading+'&hellip;');
 		$.ajax({
 			type: "GET",
 			url: "get/"+id
@@ -328,7 +328,7 @@ var crmx = {
 	 * @params (string) Search query
 	 */
 	search: function(query) {"use strict";
-		$('#people').prepend('<li class="nav-header">Searching&hellip;</li>');
+		$('#people').prepend('<li class="nav-header">'+crmx.config.lang.searching+'&hellip;</li>');
 		$.ajax({
 			type: "GET",
 			url: "search/"+query
@@ -368,10 +368,10 @@ var crmx = {
 	 */
 	updateui: function() {"use strict";
 		if ($('#id').val().length>0) {
-			$('.save').fadeIn().html('Save');
+			$('.save').fadeIn().html(crmx.config.lang.save);
 			$('#delete').fadeIn();
 		}else{
-			$('.save').fadeIn().html('Create new');
+			$('.save').fadeIn().html(crmx.config.lang.createnew);
 			$('#delete').fadeOut();
 		}
 	},
@@ -470,10 +470,10 @@ var crmx = {
 		// Add comment
 		$('#c_button').on('click', function(){
 			if ($('#id').val().length<1) {
-				crmx.notification('Select a name first', 'error');
+				crmx.notification(crmx.config.lang.selectnamefirst, 'error');
 			}
 			if ($('#c').val().length<1) {
-				crmx.notification('Enter a comment first', 'error');
+				crmx.notification(crmx.config.lang.entercommentfirst, 'error');
 			}
 			crmx.comment($('#id').val(), $('#c').val().replace(/\n/g, '<br>'));
 			return false;
@@ -481,7 +481,7 @@ var crmx = {
 
 		// Delete comment
 		$('#comments').on('click', '.comment-delete', function() {
-			if(confirm('Are you sure you want to delete this comment?')) {
+			if(confirm(crmx.config.lang.confirmdeletecomment)) {
 				$.ajax({
 					type: "DELETE",
 					url: "comment/"+$(this).data('id')
