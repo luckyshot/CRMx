@@ -262,6 +262,19 @@ The last step is to add the plugin name to the <code>$plugins</code> array in <c
 
 
 
+Multi-language
+---------------
+
+In the <code>lang</code> folder, create a new language file (use <a href="http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes" target="_blank">ISO 639-1 codes</a>) or use an existing one. 
+
+Then, add <code>'lang' => 'es-es',</code> in the <strong>user's configuration</strong>.
+
+Alternatively, you can change <code>LANG_DEFAULT</code> so everyone will have the same language.
+
+Having different languages is not only useful to change the language of CRMx but to customize the app further. For example, if you use CRMx as a Project Plan system you can rename 'Name' to 'Project' or 'Save contact' to 'Save project'.
+
+
+
 MySQL table details
 ---------------
 
@@ -283,6 +296,10 @@ MySQL table details
 
 Changelog
 ----------------
+
+### 1 April 2013
+- Multilanguage support
+- Code clean up and improvements
 
 ### 29 March 2013
 
@@ -318,7 +335,6 @@ Changelog
 
 To Do
 ----------------
-- Multilanguage support
 - Use same date format along MySQL
 - Smooth scrolling anchors up/down page
 
@@ -343,4 +359,3 @@ Credits
 Author: <a href="http://xaviesteve.com/">Xavi Esteve</a> (<a href="http://twitter.com/xaviesteve">@xaviesteve</a>)
 
 Icons by Glyphicons
-cons
