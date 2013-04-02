@@ -62,19 +62,19 @@ $form = array(
 			'type' => 'email'
 		),
 		array(
-			'title' => 'Phone Number'
+			'title' => 'Phone Number',
 			'name' => 'phone',
-			'type' => 'tel',
+			'type' => 'tel'
 		),
 		array(
-			'title' => 'Company'
+			'title' => 'Company',
 			'name' => 'company',
-			'type' => 'search',
+			'type' => 'search'
 		),
 		array(
-			'title' => 'Address'
+			'title' => 'Address',
 			'name' => 'address',
-			'type' => 'search',
+			'type' => 'search'
 		)
 	)
 );
