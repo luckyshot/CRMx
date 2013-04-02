@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>CRMx by luckyshot</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>CRMx</h1>
+        <h2>CRMx is a super-flexible micro-CRM system for personal, freelance and small businesses. It can be customized very quickly for Customer Relationship Management, Lead Management System, Project Management, To-Do List or any other usage due to its flexibility in customization and scalable code. CRMx allows unlimited users to work in the same or different environments very flexibly. CRMx works through a RESTful API which allows third-party services and other software to interact neatly. CRMx also has a User Access Control system (UAC) to define permissions for each user and have maximum control over the organization.</h2>
+        <a href="https://github.com/luckyshot/CRMx" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>CRMx</h1>
+
+<p>CRMx is a super-flexible micro-CRM system for personal, freelance and small businesses. It can be customized very quickly for Customer Relationship Management, Lead Management System, Project Management, To-Do List or any other usage due to its flexibility in customization and scalable code.</p>
+
+<ul>
+<li>
+<strong>RESTful API</strong>: Works through a RESTful API which allows third-party services and other software to interact neatly.</li>
+<li>
+<strong>Unlimited users &amp; environments</strong>: Allows unlimited users to work in the same or different environments very flexibly (including a User Access Control system (UAC) to define permissions for each user and have maximum control).</li>
+<li>
+<strong>Simple setup</strong>: Similar to Sublime Text, all the config is done in <code>config.php</code> which keeps the overall code tiny and much easier to maintain and scale.</li>
+<li>
+<strong>Extremely scalable</strong>: CRMx is extremely small, with one PHP, one JS and one CSS files, with inline comments, you can see the code and start hacking it in 5 minutes. Oh, and you can also create CRMx plugins :)</li>
+</ul><h2>Screenshots</h2>
+
+<h3>Table view</h3>
+
+<p>From here you have an overall view of your contacts:</p>
+
+<p><img src="http://i.imgur.com/U6krA3U.png" alt="Table view"></p>
+
+<h3>Search as-you-type</h3>
+
+<p>Type in the search box to start filtering, results update dynamically as you type:</p>
+
+<p><img src="http://i.imgur.com/5v3kgpQ.png" alt="Search as-you-type"></p>
+
+<h3>Smart filtering</h3>
+
+<p>CRMx detects your custom form field types and adds shortcut lists on the top navigation automatically:</p>
+
+<p><img src="http://i.imgur.com/H6Ur7IR.png" alt="Smart filtering"></p>
+
+<h3>Person view</h3>
+
+<p>View a person details, edit them directly and also add timed comments:</p>
+
+<p><img src="http://i.imgur.com/bAeyQHu.png" alt="Person view"></p>
+
+<h3>Smart links</h3>
+
+<p>Buttons appear next to the person fields to email, search Google or Skype-call in one click</p>
+
+<p><img src="http://i.imgur.com/W4Nj2LJ.png" alt="Smart links"></p>
+
+<h2>Technology</h2>
+
+<ul>
+<li>Limonade PHP micro-framework (inc. <a href="https://gist.github.com/luckyshot/5098146">custom MySQL <i>lemon</i></a>)</li>
+<li>MySQL</li>
+<li>JavaScript / jQuery / JSON</li>
+<li>Twitter Bootstrap (and LESS)</li>
+</ul><h2>Settings</h2>
+
+<p>There is no Settings menu or user accounts, all is done in PHP variables (like Sublime Text) in the <code>config.php</code> file, which makes the code app a lot smaller as well as easy to administer, maintain and scale.</p>
+
+<h2>Installation</h2>
+
+<p>Open <code>config.php</code> to modify the app settings:</p>
+
+<ul>
+<li>MySQL info and prefix</li>
+<li>Customize the <code>$form</code> array</li>
+<li>Add your <code>$users</code> and their permissions</li>
+</ul><h2>User accounts</h2>
+
+<p>User accounts are created by adding them to the <code>$users</code> PHP array. These are the fields you can customize:</p>
+
+<ul>
+<li>
+<strong>name</strong> (string) Full name of the user</li>
+<li>
+<strong>pass</strong> (string) Add a very long random alphanumeric string of between 100 and 300 characters (the more the better, check <code>is_logged_in()</code> in the code for a generator)</li>
+<li>
+<strong>level</strong> (string) Add flags to allow users certain privileges
+
+<ul>
+<li>
+<strong>r</strong> <i>read</i>: useful when you want an external partner to submit contacts but not be able to access the CRM (i.e. external lead provider)</li>
+<li>
+<strong>s</strong> <i>save</i>: create and update contacts</li>
+<li>
+<strong>d</strong> <i>delete</i>: can delete contacts</li>
+<li>
+<strong>c</strong> <i>comment</i>: can comment on contacts</li>
+</ul>
+</li>
+<li>
+<strong>dbprefix</strong> (string) Many users can work in different environments on the same database by using a different table. To do this, just specify a different MySQL prefix here (i.e. <code>sales_</code>)</li>
+<li>
+<strong>sitename</strong> (string) You can customize the app title for each user</li>
+</ul><h3>Logging in</h3>
+
+<p>There is no login screen in CRMx. Users bookmark a long URL and click on it to login. You should specify a long and unique password (at least 50 characters) for each user and then send them the URL to bookmark, which looks like:</p>
+
+<p><code><a href="http://crmx.com/login/thesuperlongpassword">http://crmx.com/login/thesuperlongpassword</a></code></p>
+
+<h2>Environments</h2>
+
+<p>Environments allow users to work on separated CRMx (with their own contacts and form fields) while using the same app. Add that prefix to a user and another array in <code>$form</code>. Simple as that.</p>
+
+<h2>Form field types</h2>
+
+<p>It's very easy to customize CRMx to your own needs. You just need to modify the <code>$form</code> PHP array and the app will take care of the rest.</p>
+
+<h3>Textbox</h3>
+
+<p>Just name and title are needed:</p>
+
+<pre>'name' =&gt; 'email',
+'title' =&gt; 'Email address'</pre>
+
+<h3>Select dropdown</h3>
+
+<p>Specify <code>'type' =&gt; 'select'</code> and a list of elements:</p>
+
+<pre>'name' =&gt; 'color',
+'title' =&gt; 'Favorite color',
+'type' =&gt; 'select',
+'list' =&gt; array( "Red", Green", "Blue" )</pre>
+
+<h3>Others formats</h3>
+
+<p>You can use other HTML5 form field types like: <code>password</code>, <code>hidden</code>, <code>color</code>, <code>date</code>, <code>datetime</code>, <code>datetime-local</code>, <code>email</code>, <code>month</code>, <code>number</code>, <code>range</code>, <code>search</code>, <code>tel</code>, <code>time</code>, <code>url</code> and <code>week</code>.</p>
+
+<pre>'name' =&gt; 'website',
+'title' =&gt; 'Website URL',
+'type' =&gt; 'url'</pre>
+
+<h2>Hidden</h2>
+
+<p>To skip a form field to show in the main table, set the <code>hidden</code> property to <code>1</code>. This is useful when you have a lot of fields.</p>
+
+<pre>'hidden' =&gt; 1,</pre>
+
+<h2>REST API</h2>
+
+<h3>Home <code>/</code>
+</h3>
+
+<h5>Request data (<code>GET</code>)</h5>
+
+<p><i>(none)</i></p>
+
+<h5>Response (<code>HTML</code>)</h5>
+
+<p>The home page in HTML format (including the default people and form JSON lists embedded to save server requests).</p>
+
+<hr><h3>Login <code>/login/:pass</code>
+</h3>
+
+<h5>Request data (GET)</h5>
+
+<ul>
+<li>
+<code>pass</code> (string)</li>
+</ul><h5>Response (<code>JSON</code>)</h5>
+
+<p>On success redirects to Home, on fail shows a message.</p>
+
+<hr><h3>Search <code>/search/:q</code>
+</h3>
+
+<p>Searches people for that query and returns a JSON array.</p>
+
+<h5>Request data (<code>GET</code>)</h5>
+
+<ul>
+<li>
+<code>q</code> (string)</li>
+</ul><h5>Response <code>JSON</code>
+</h5>
+
+<pre>[
+  {
+    "id":"46",
+    "name":"Richard",
+    "form":{
+      "title":"CEO",
+      "group":"London",
+      "type":"Provider",
+      "email":"",
+      // ...
+    }
+  },{
+    "id":"37",
+    "name":"Peter",
+    "form":{
+      "title":"Director",
+      "group":"London",
+      "type":"-",
+      "email":"",
+      // ...
+    }
+  }
+]</pre>
+
+<hr><h3>Load person <code>/get/:id</code>
+</h3>
+
+<p>You can pass an ID or a name, returns results for a single person (if more than one match returns the most recently modified).</p>
+
+<h5>Request data (<code>GET</code>)</h5>
+
+<ul>
+<li>
+<code>id</code> (string)</li>
+</ul><h5>Response (<code>JSON</code>)</h5>
+
+<pre>{
+  "id": "46",
+  "name": "Richard",
+  "form": {
+    "title": "CEO",
+    "group": "London",
+    "type": "Provider",
+    "email": "",
+    // ...
+  },
+  "comments":[
+    {
+      "user": "Xavi Esteve",
+      "date": "2013-03-24T16:03:19+00:00",
+      "text": "..."
+    }
+  ],
+  "created": "1364140289",
+  "updated": "1364140289"
+}</pre>
+
+<hr><h3>Save person <code>/save</code>
+</h3>
+
+<h5>Request data (<code>POST</code>)</h5>
+
+<ul>
+<li>
+<code>id</code> (string)</li>
+</ul><h5>Response (<code>JSON</code>)</h5>
+
+<pre>[
+  {
+    "status": "success" OR "error",
+    "message": "Contact saved successfully."
+}
+]</pre>
+
+<hr><h3>Delete person <code>/delete</code>
+</h3>
+
+<h5>Request data (<code>DELETE</code>)</h5>
+
+<ul>
+<li>
+<code>id</code> (string)</li>
+</ul><h5>Response (<code>JSON</code>)</h5>
+
+<pre>[
+  {
+    "status": "success" OR "error",
+    "message": "Contact deleted successfully."
+}
+]</pre>
+
+<hr><h3>Add comment <code>/comment</code>
+</h3>
+
+<h5>Request data (<code>POST</code>)</h5>
+
+<ul>
+<li>
+<code>id</code> (integer)</li>
+<li>
+<code>comment</code> (string)</li>
+</ul><h5>Response (<code>JSON</code>)</h5>
+
+<pre>[
+  {
+    "status": "success" OR "error",
+    "message": "Comment added."
+}
+]</pre>
+
+<hr><h3>Delete comment <code>/comment/:id</code>
+</h3>
+
+<h5>Request data (<code>DELETE</code>)</h5>
+
+<ul>
+<li>
+<code>id</code> (integer)</li>
+</ul><h5>Response (<code>JSON</code>)</h5>
+
+<pre>[
+  {
+    "status": "success" OR "error",
+    "message": "Comment deleted."
+}
+]</pre>
+
+<h2>Plugins</h2>
+
+<p>With plugins you can add extra functionality to CRMx without needing to modify the core files. Creating plugins is extremely easy and you can run PHP, JavaScript and/or CSS code. To create a plugin, add a new folder to the <code>plugins</code> folder and files, all with your plugin name:</p>
+
+<pre>/plugins/salesforce
+    salesforce.php
+    salesforce.js
+    salesforce.css</pre>
+
+<p>All files are optional, if you want to create a theme then a single CSS file should be enough. If you want to have a file that doesn't run automatically then name it differently than the plugin name.</p>
+
+<p>The last step is to add the plugin name to the <code>$plugins</code> array in <code>config.php</code>.</p>
+
+<h2>Multi-language</h2>
+
+<p>In the <code>lang</code> folder, create a new language file (use <a href="http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes" target="_blank">ISO 639-1 codes</a>) or use an existing one. </p>
+
+<p>Then, add <code>'lang' =&gt; 'es-es',</code> in the <strong>user's configuration</strong>.</p>
+
+<p>Alternatively, you can change <code>LANG_DEFAULT</code> so everyone will have the same language.</p>
+
+<p>Having different languages is not only useful to change the language of CRMx but to customize the app further. For example, if you use CRMx as a Project Plan system you can rename 'Name' to 'Project' or 'Save contact' to 'Save project'.</p>
+
+<h2>MySQL table details</h2>
+
+<h3>
+<code>people</code> table</h3>
+
+<ul>
+<li>
+<strong>id</strong> (int20, primary, autoincrement)</li>
+<li>
+<strong>name</strong> (string255, mandatory)</li>
+<li>
+<strong>form</strong> (text, json)</li>
+<li>
+<strong>comments</strong> (text, json)</li>
+<li>
+<strong>created</strong> (int11)</li>
+<li>
+<strong>updated</strong> (int11)</li>
+</ul><h2>Changelog</h2>
+
+<h3>1 April 2013</h3>
+
+<ul>
+<li>Multilanguage support</li>
+<li>Code clean up and improvements</li>
+<li>Favicon</li>
+</ul><h3>29 March 2013</h3>
+
+<ul>
+<li>Generate MySQL tables automatically</li>
+<li>Multiword search</li>
+<li>Sort by column</li>
+<li>Delete comments</li>
+<li>Code optimization</li>
+<li>Code documentation and inline comments</li>
+</ul><h3>28 March 2013</h3>
+
+<ul>
+<li>CRMx plugins to add extra functionality (canned responses, SalesForce integration, etc.)</li>
+<li>Table view instead of Sidebar</li>
+<li>Redesigned top nav</li>
+<li>Search also searches comments now</li>
+<li>Added icons and buttons</li>
+<li>Form is now two-column instead of one</li>
+<li>Smart links in detail view</li>
+<li>Improved docs, added screenshots</li>
+<li>Many more improvements and small tweaks</li>
+<li>Fixed bugs with notification message</li>
+<li>Other bugs fixed</li>
+<li>Reorganized all files</li>
+<li>Minified all JS into one file</li>
+<li>jQuery to use latest instead of 1.8.6</li>
+<li>Minified CSS into two files</li>
+<li>Responsive improvements</li>
+<li>MIT licensed</li>
+</ul><h2>To Do</h2>
+
+<ul>
+<li>Use same date format along MySQL</li>
+<li>Smooth scrolling anchors up/down page</li>
+<li>Write tests</li>
+</ul><h2>License</h2>
+
+<p>CRMx has been created by Xavi Esteve and is licensed under a MIT License.</p>
+
+<p>Copyright © 2013 Xavi Esteve</p>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+
+<h2>Credits</h2>
+
+<p>Author: <strong><a href="http://xaviesteve.com/">Xavi Esteve</a></strong> (<a href="http://twitter.com/xaviesteve">@xaviesteve</a>)</p>
+
+<ul>
+<li>Icons by Glyphicons (attribution)</li>
+<li>Twitter Bootstrap by Twitter, Inc (Apache license)</li>
+<li>Limonade PHP micro framework by Fabrice Luraine (MIT license)</li>
+<li>EasyDate by Parsha Pourkhomami (MIT license)</li>
+<li>
+<a href="https://github.com/bryanwoods/autolink-js">AutoLink</a> by Bryan Woods (open sourced)</li>
+<li>Smooth Scrolling</li>
+</ul>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/luckyshot/CRMx/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/luckyshot/CRMx/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/luckyshot/CRMx"></a> is maintained by <a href="https://github.com/luckyshot">luckyshot</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
