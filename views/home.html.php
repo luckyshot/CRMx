@@ -5,8 +5,9 @@
 	<title><?=$sitename?></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name='robots' content='noindex' />
-	<link href="css/bootstrap.css" rel="stylesheet">
-	<link href="css/style.css?v=<?=$app_version?>" rel="stylesheet">
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/style.css?v=<?=$app_version?>">
+	<link rel="shortcut icon" href="favicon.png?v=<?=$app_version?>" />
 </head>
 <body>
 
@@ -28,7 +29,7 @@
 							<form class="navbar-form">
 								<a href="#top" class="btn" title="<?=$lang['viewtable']?>"><i class="icon-th"></i></a>
 								<a href="#main" class="btn" title="<?=$lang['viewdetails']?>"><i class="icon-user"></i></a>
-								<a href="#main" class="btn btn-primary clearform" title="<?=$lang['addnewcontact']?>"><i class="icon-plus icon-white"></i></a>
+								<a href="#main" class="btn btn-primary clearform" title="<?=$lang['contactcreate']?>"><i class="icon-plus icon-white"></i></a>
 								<input id="s" class="input-large search-query" type="text" placeholder="<?=$lang['searchplaceholder']?>&hellip;">
 							</form>
 						</li>
@@ -78,7 +79,7 @@
 						<p class="lead"><input type="text" id="title" placeholder="<?=$lang['title']?>"></p>
 					</div>
 					<div class="span2">
-						<p class="pull-right"><a class="save btn btn-success hide" href="#"><?=$lang['savecontact']?></a></p>
+						<p class="pull-right"><a class="save btn btn-success hide" href="#"><?=$lang['contactsave']?></a></p>
 					</div>
 				</div>
 
@@ -97,7 +98,6 @@
 
 					</div><!--/span-->
 					<div class="span6">
-
 
 						<div id="commentbox" class="hide">
 							<label><?=$lang['comments']?></label>
@@ -127,7 +127,7 @@
 
 			<div class="row-fluid">
 				<div class="span6">
-					<p><small>&copy; <?=date('Y')?> CRMx <?=$app_version?> <?=$lang['by']?> <a href="http://xaviesteve.com" target="_blank">Xavi</a></small></p>
+					<p><small>&copy; <?=date('Y')?> <a href="https://github.com/luckyshot/crmx" target="_blank">CRMx</a> <?=$app_version?> <?=$lang['by']?> <a href="http://xaviesteve.com" target="_blank">Xavi</a></small></p>
 				</div>
 				<div class="span6">
 					<p class="tr"><a href="#top"><?=$lang['backtotop']?></a></p>
@@ -139,12 +139,13 @@
 
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 
-	<!--<script src="js/script.js?v=<?=$app_version?>"></script>-->
+<!--	<script src="js/script.js?v=<?=$app_version?>"></script>
+-->
 	<script src="js/bootstrap-collapse.js"></script>
 	<script src="js/bootstrap-dropdown.js"></script>
 	<script src="js/jquery-easydate.js"></script>
+	<script src="js/smoothscroll.js"></script>
 	<script src="js/crmx.js"></script>
-
 
 	<script>
 		$(document).ready(function(){

@@ -196,20 +196,14 @@ Searches people for that query and returns a JSON array.
     "name":"Richard",
     "form":{
       "title":"CEO",
-      "group":"London",
-      "type":"Provider",
-      "email":"",
-      // ...
+      // your defined form fields
     }
   },{
     "id":"37",
     "name":"Peter",
     "form":{
       "title":"Director",
-      "group":"London",
-      "type":"-",
-      "email":"",
-      // ...
+      // your defined form fields
     }
   }
 ]</pre>
@@ -235,10 +229,7 @@ You can pass an ID or a name, returns results for a single person (if more than 
   "name": "Richard",
   "form": {
     "title": "CEO",
-    "group": "London",
-    "type": "Provider",
-    "email": "",
-    // ...
+    // your defined form fields
   },
   "comments":[
     {
@@ -360,7 +351,7 @@ The last step is to add the plugin name to the <code>$plugins</code> array in <c
 Multi-language
 ---------------
 
-In the <code>lang</code> folder, create a new language file (use <a href="http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes" target="_blank">ISO 639-1 codes</a>) or use an existing one. 
+In the <code>lang</code> folder, create a new language file (use <a href="http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes" target="_blank" rel="nofollow">ISO 639-1 codes</a>) or use an existing one. 
 
 Then, add <code>'lang' => 'es-es',</code> in the <strong>user's configuration</strong>.
 
@@ -392,8 +383,16 @@ MySQL table details
 Changelog
 ----------------
 
+### 4 April 2013
+
+- Fixed sorting Titles (thanks <a href="https://github.com/soomiq" rel="nofollow">Soomiq</a>)
+- Fixed Language files
+- Added sprite images
+
+
 ### 1 April 2013
-- Multilanguage support
+- Multilanguage
+- Plugins
 - Code clean up and improvements
 - Favicon
 
@@ -454,11 +453,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 Credits
 ---------------
 
-Author: <strong><a href="http://xaviesteve.com/">Xavi Esteve</a></strong> (<a href="http://twitter.com/xaviesteve">@xaviesteve</a>)
+Author: <strong><a href="http://xaviesteve.com/" target="_blank">Xavi Esteve</a></strong> (<a href="http://twitter.com/xaviesteve" target="_blank" rel="nofollow">@xaviesteve</a>)
 
-- Icons by Glyphicons (attribution)
-- Twitter Bootstrap by Twitter, Inc (Apache license)
-- Limonade PHP micro framework by Fabrice Luraine (MIT license)
-- EasyDate by Parsha Pourkhomami (MIT license)
-- <a href="https://github.com/bryanwoods/autolink-js">AutoLink</a> by Bryan Woods (open sourced)
-- Smooth Scrolling
+- Icons by <a href="http://glyphicons.com/" target="_blank" rel="nofollow">Glyphicons</a> (attribution)
+- <a href="http://twitter.github.com/bootstrap/" target="_blank" rel="nofollow">Twitter Bootstrap</a> by Twitter, Inc (Apache license)
+- <a href="http://limonade-php.github.com/" target="_blank" rel="nofollow">Limonade PHP micro framework</a> by Fabrice Luraine (MIT license)
+- <a href="http://easydate.parshap.com/" target="_blank" rel="nofollow">EasyDate</a> by Parsha Pourkhomami (MIT license)
+- <a href="https://github.com/bryanwoods/autolink-js" target="_blank" rel="nofollow">AutoLink</a> by Bryan Woods (open sourced)
+

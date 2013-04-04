@@ -27,7 +27,8 @@ var crmx = {
 	config: {
 		sitename: '',
 		username: '',
-		sort: 'name'
+		sort: 'name',
+		lang : ''
 	},
 	form: {},
 	people: {},
@@ -64,7 +65,6 @@ var crmx = {
 							'</ul>' +
 						'</li>');
 
-
 						for (var j in form[i].list) {
 							// Add to select
 							form[i].html += '<option>'+form[i].list[j]+'</option>';
@@ -73,6 +73,7 @@ var crmx = {
 							$('#nav-drop-'+form[i].name).append('<li data-search=\'"'+form[i].name+'":"'+form[i].list[j]+'"\'><a href="#">'+form[i].list[j]+'</a></li>');
 
 						}
+
 					form[i].html += '</select>';
 
 				}else{
@@ -396,13 +397,19 @@ var crmx = {
 	sort: function(column, data) {"use strict";
 		function createSorter(column) {
 			return function (a,b) {
-			if (column==='name' || column==='title') {
-				var aVal = a[column], bVal = b[column];		
-			}else{
-				var aVal = a.form[column], bVal = b.form[column];		
-			}
-				return aVal > bVal ? 1 : (aVal < bVal ?  - 1 : 0);
-		};
+				if (column==='name') {
+					var aVal = a[column], bVal = b[column];
+				}else{
+				 	var aVal = a.form[column], bVal = b.form[column];		
+				}
+
+				if(typeof aVal === 'string')
+					aVal = aVal.toLowerCase();
+				if(typeof bVal === 'string')
+					bVal = bVal.toLowerCase();
+
+				return aVal > bVal ? 1 : (aVal < bVal ? - 1 : 0);
+			};
 		}
 		return data.sort(createSorter(column));
 	},
@@ -525,6 +532,7 @@ var crmx = {
 		$('#notification').on('click', function(){
 			$(this).stop().fadeOut(200);
 		});
+
 
 		$('#s').focus();
 	}

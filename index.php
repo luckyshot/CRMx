@@ -173,8 +173,7 @@ function api ($pass, $action, $detail) {
 function home() {
 	global $lang;
 	if (!isset($_SESSION['level']) OR strpos($_SESSION['level'], 'r')===-1) {
-		html('<!doctype html><html><body style="font-family: \'Helvetica Neue\',Helvetica,Arial,sans-serif;"><h1 style="font-weight:100;">'.$lang['notloggedin'].'</h1></body></html>');
-		halt();
+		die('<!doctype html><html><body style="font-family: \'Helvetica Neue\',Helvetica,Arial,sans-serif;"><h1 style="font-weight:100;">'.$lang['notloggedin'].'</h1></body></html>');
 	}else{
 		global $form, $plugins;
 		set('sitename', (isset($_SESSION['sitename'])) ? set('sitename', $_SESSION['sitename']) : set('sitename', SITE_NAME) );
