@@ -472,6 +472,8 @@ var crmx = {
 				crmx.timer = true;
 				var t = setTimeout(function(){ crmx.search($('#s').val());crmx.timer=false; }, 500);
 			}
+		}).on('keypress', function(e) {
+			if(e.keyCode == 13) return false;
 		});
 
 		// Add comment
