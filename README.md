@@ -190,8 +190,7 @@ Searches people for that query and returns a JSON array.
 
 ##### Response <code>JSON</code>
 
-<pre>[
-  {
+<pre>{
     "id":"46",
     "name":"Richard",
     "form":{
@@ -205,8 +204,7 @@ Searches people for that query and returns a JSON array.
       "title":"Director",
       // your defined form fields
     }
-  }
-]</pre>
+}</pre>
 
 
 
@@ -256,12 +254,10 @@ You can pass an ID or a name, returns results for a single person (if more than 
 
 ##### Response (<code>JSON</code>)
 
-<pre>[
-  {
+<pre>{
     "status": "success" OR "error",
     "message": "Contact saved successfully."
-}
-]</pre>
+}</pre>
 
 
 
@@ -277,12 +273,10 @@ You can pass an ID or a name, returns results for a single person (if more than 
 
 ##### Response (<code>JSON</code>)
 
-<pre>[
-  {
+<pre>{
     "status": "success" OR "error",
     "message": "Contact deleted successfully."
-}
-]</pre>
+}</pre>
 
 
 
@@ -299,12 +293,10 @@ You can pass an ID or a name, returns results for a single person (if more than 
 
 ##### Response (<code>JSON</code>)
 
-<pre>[
-  {
+<pre>{
     "status": "success" OR "error",
     "message": "Comment added."
-}
-]</pre>
+}</pre>
 
 
 
@@ -320,12 +312,10 @@ You can pass an ID or a name, returns results for a single person (if more than 
 
 ##### Response (<code>JSON</code>)
 
-<pre>[
-  {
+<pre>{
     "status": "success" OR "error",
     "message": "Comment deleted."
-}
-]</pre>
+}</pre>
 
 
 
