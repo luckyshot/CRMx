@@ -387,6 +387,7 @@ Changelog
 
 - Fixed sorting Titles (thanks <a href="https://github.com/soomiq" rel="nofollow">Soomiq</a>)
 - Fixed Language files
+- Fixed Save/New contact button
 - Added sprite images
 
 

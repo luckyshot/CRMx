@@ -15,7 +15,6 @@ $lang = array(
 	'loading' => 'Loading',
 	'saved' => 'Saved',
 	'by' => 'by',
-	'createnew' => 'Create new',
 	'selectnamefirst' => 'Select a name first',
 
 	// General status messages
@@ -40,6 +39,7 @@ $lang = array(
 	'noresults' => 'No results',
 
 	// Contact
+	'contactnew' => 'Create new',
 	'contactsave' => 'Save contact',
 	'contactdelete' => 'Delete contact',
 	'contactcreate' => 'Add new contact',

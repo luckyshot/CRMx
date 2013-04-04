@@ -369,10 +369,10 @@ var crmx = {
 	 */
 	updateui: function() {"use strict";
 		if ($('#id').val().length>0) {
-			$('.save').fadeIn().html(crmx.config.lang.save);
+			$('.save').fadeIn().html(crmx.config.lang.contactsave);
 			$('#delete').fadeIn();
 		}else{
-			$('.save').fadeIn().html(crmx.config.lang.createnew);
+			$('.save').fadeIn().html(crmx.config.lang.contactnew);
 			$('#delete').fadeOut();
 		}
 	},
