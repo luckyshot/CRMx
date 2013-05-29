@@ -315,7 +315,7 @@ function save() {
 
 		if ($result) {
 			if ($_POST['id']) {
-				$response = array('status'=>'success','message'=>'Contact details saved');
+				$response = json(array('status'=>'success','message'=>'Contact details saved'));
 			}else{
 				// Get the ID
 				$q = "SELECT id from ".$_SESSION['dbprefix']."people ORDER BY id DESC LIMIT 1";
