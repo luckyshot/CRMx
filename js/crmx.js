@@ -96,7 +96,7 @@ var crmx = {
 					}else if (form[i].type==='search') {
 						form[i].html += '<a class="btn smart-link" data-smart="search" href="#" title="'+crmx.config.lang.searchgoogle+'"><i class="icon-search"></i></a></div>';
 					}else if (form[i].type==='tel') {
-						form[i].html += '<a class="btn smart-link" data-smart="call" href="#" title="'+crmx.config.lang.callcontact+'"><i class="icon-bullhorn"></i></a></div>';
+						form[i].html += '<a class="btn smart-link" data-smart="call" href="#" title="'+crmx.config.lang.callcontact+'">&phone;</a></div>';
 					}else if (form[i].type==='url') {
 						form[i].html += '<a class="btn smart-link" data-smart="url" href="#" title="'+crmx.config.lang.visitwebsite+'"><i class="icon-globe"></i></a></div>';
 					}
@@ -189,8 +189,7 @@ var crmx = {
 	 * Asks the server for an updated list of people
 	 */
 	refresh: function() {"use strict";
-		$('#s').val('');
-		crmx.search('');
+		crmx.search( $('#s').val() );
 	},
 
 	/**
@@ -385,6 +384,7 @@ var crmx = {
 	clearform: function() {"use strict";
 		$('#main input,#main select').val('');
 		$('#delete').addClass('hide');
+		$('#comments').empty();
 		crmx.updateui();
 		$('#name').focus();
 	},
