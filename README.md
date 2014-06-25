@@ -65,11 +65,12 @@ Installation
 
 Open <code>config.php</code> to modify the app settings:
 
-- MySQL info and prefix
+- Type in the MySQL user, password, server and prefix (There is no need to create the MySQL tables, these are created automatically)
 - Customize the <code>$form</code> array (see Form field types below for more info)
 - Add your <code>$users</code> and their permissions
+- Open CRMx and type in your user's password. You can also bookmark <code>http://YOURCRMXPATH.com<b>/login/YOURPASSWORD</b></code> so that it autologins you every time.
 
-(There is no need to create the MySQL tables, these are created automatically)
+
 
 User accounts
 ---------------
