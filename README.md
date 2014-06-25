@@ -66,10 +66,10 @@ Installation
 Open <code>config.php</code> to modify the app settings:
 
 - MySQL info and prefix
-- Customize the <code>$form</code> array
+- Customize the <code>$form</code> array (see Form field types below for more info)
 - Add your <code>$users</code> and their permissions
 
-
+(There is no need to create the MySQL tables, these are created automatically)
 
 User accounts
 ---------------
@@ -106,7 +106,7 @@ Environments allow users to work on separated CRMx (with their own contacts and 
 Form field types
 ---------------
 
-It's very easy to customize CRMx to your own needs. You just need to modify the <code>$form</code> PHP array and the app will take care of the rest.
+It's very easy to customize CRMx to your own needs. You just need to modify the <code>$form</code> PHP array in <code>config.php</code> and the app will take care of the rest.
 
 
 ### Textbox
@@ -135,10 +135,27 @@ You can use other HTML5 form field types like: <code>password</code>, <code>hidd
 'title' => 'Website URL',
 'type' => 'url'</pre>
 
+### Example
+
+This is how I have my personal CRMx <code>config.php</code> set up:
+
+<pre>$form = array(
+	'test_' => array( // table prefix
+		// name (default, no need to specify)
+		// title (default, no need to specify)
+		array('name' => 'group',	'title' => 'Group',			'type' => 'select',	'list' => array( "-", "London", "Barcelona")),
+		array('name' => 'type',		'title' => 'Type',			'type' => 'select',	'list' => array( "-", "Partner", "Client", "Lead")),
+		array('name' => 'email',	'title' => 'Email',			'type' => 'email'),
+		array('name' => 'phone',	'title' => 'Phone Number',	'type' => 'tel'),
+		array('name' => 'company',	'title' => 'Company',		'type' => 'search'),
+		array('name' => 'address',	'title' => 'Address',		'type' => 'search'),
+	),
+);</pre>
+
 
 ## Hidden
 
-To skip a form field to show in the main table, set the <code>hidden</code> property to <code>1</code>. This is useful when you have a lot of fields.
+To skip a form field to show in the main table, set the <code>hidden</code> property to <code>1</code>. This is useful when you have a lot of fields or you want to disable a field you might want to use in the future.
 
 <pre>'hidden' => 1,</pre>
 
@@ -355,6 +372,8 @@ MySQL table details
 ---------------
 
 ### <code>people</code> table
+
+(You don't need to create any tables, CRMx will create them automatically)
 
 - <strong>id</strong> <small>(int20, primary, autoincrement)</small>
 - <strong>name</strong> <small>(string255, mandatory)</small>
