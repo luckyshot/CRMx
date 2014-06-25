@@ -47,6 +47,13 @@ footer {margin-top:400px;}
 	/* Enable use of floated navbar text */
 	.navbar-text.pull-right {float: none;padding-left: 5px;padding-right: 5px;}
 	#notification {top: 50px;}
+	#people-table td:nth-child(1n+6),
+	#people-table th:nth-child(1n+6) {display:none;}
+}
+
+@media (max-width: 640px) {
+	#people-table td:nth-child(1n+3),
+	#people-table th:nth-child(1n+3) {display:none;}
 }
 
 
