@@ -1,15 +1,15 @@
 <?php
 /*
-	,o888888o.    8 888888888o.            ,8.       ,8.          `8.`8888.      ,8' 
-   8888     `88.  8 8888    `88.          ,888.     ,888.          `8.`8888.    ,8'  
-,8 8888       `8. 8 8888     `88         .`8888.   .`8888.          `8.`8888.  ,8'   
-88 8888           8 8888     ,88        ,8.`8888. ,8.`8888.          `8.`8888.,8'    
-88 8888           8 8888.   ,88'       ,8'8.`8888,8^8.`8888.          `8.`88888'     
-88 8888           8 888888888P'       ,8' `8.`8888' `8.`8888.         .88.`8888.     
-88 8888           8 8888`8b          ,8'   `8.`88'   `8.`8888.       .8'`8.`8888.    
-`8 8888       .8' 8 8888 `8b.       ,8'     `8.`'     `8.`8888.     .8'  `8.`8888.   
-   8888     ,88'  8 8888   `8b.    ,8'       `8        `8.`8888.   .8'    `8.`8888.  
-	`8888888P'    8 8888     `88. ,8'         `         `8.`8888. .8'      `8.`8888. 
+	,o888888o.    8 888888888o.            ,8.       ,8.          `8.`8888.      ,8'
+   8888     `88.  8 8888    `88.          ,888.     ,888.          `8.`8888.    ,8'
+,8 8888       `8. 8 8888     `88         .`8888.   .`8888.          `8.`8888.  ,8'
+88 8888           8 8888     ,88        ,8.`8888. ,8.`8888.          `8.`8888.,8'
+88 8888           8 8888.   ,88'       ,8'8.`8888,8^8.`8888.          `8.`88888'
+88 8888           8 888888888P'       ,8' `8.`8888' `8.`8888.         .88.`8888.
+88 8888           8 8888`8b          ,8'   `8.`88'   `8.`8888.       .8'`8.`8888.
+`8 8888       .8' 8 8888 `8b.       ,8'     `8.`'     `8.`8888.     .8'  `8.`8888.
+   8888     ,88'  8 8888   `8b.    ,8'       `8        `8.`8888.   .8'    `8.`8888.
+	`8888888P'    8 8888     `88. ,8'         `         `8.`8888. .8'      `8.`8888.
 
 Copyright (c) 2013 Xavi Esteve (MIT License)
 
@@ -109,6 +109,8 @@ function login($pass, $redirect = true) {
 
 			$result = db($q, $c);
 
+			if ( $result === false ){ echo 'Could not create the Database tables, please check your MySQL settings.'; }
+
 			if ($redirect==true) {
 				header("Location: ".url_for('/')); // send_header
 				return true;
@@ -128,7 +130,7 @@ function login($pass, $redirect = true) {
 /**
  * logout
  * Close user's session
- * @param () 
+ * @param ()
  */
 function logout() {
 	session_destroy();
@@ -199,7 +201,7 @@ function home() {
 /**
  * search
  * Search people
- * @param (string) Pass a string to search or empty for all results 
+ * @param (string) Pass a string to search or empty for all results
  */
 function search($s='') {
 	if (!isset($_SESSION['level']) OR strpos($_SESSION['level'], 'r')===-1) {
@@ -222,7 +224,7 @@ function search($s='') {
 			return json($people);
 		}else{
 			if ($q) {
-				return json(array('status'=>'error','message'=>'No results'));
+				return json(array('status'=>'warning','message'=>'No results'));
 			}
 		}
 	}
@@ -252,8 +254,8 @@ function get($detail) {
 		}
 		if ($people) {
 			$people = $people[0];
-			$people['form'] = json_decode($people['form'], true); // decode to later encode but no other way :( 
-			$people['comments'] = json_decode($people['comments'], true); // decode to later encode but no other way :( 
+			$people['form'] = json_decode($people['form'], true); // decode to later encode but no other way :(
+			$people['comments'] = json_decode($people['comments'], true); // decode to later encode but no other way :(
 			$response = ($people);
 		}else{
 			$response = array('status'=>'error','message'=>'User does not exist');
@@ -296,18 +298,18 @@ function save() {
 		}
 //var_dump($array);
 		if ($_POST['id']) { // update details
-			$q = "UPDATE ".$_SESSION['dbprefix']."people SET 
+			$q = "UPDATE ".$_SESSION['dbprefix']."people SET
 				form = '".$c->real_escape_string(json_encode($array))."',
 				name =  '".$c->real_escape_string($_POST['name'])."',
 				`updated` =  '".time()."' WHERE  id = ".($_POST['id']).";";
 		}else{ // create new
 			$q = "INSERT INTO ".$_SESSION['dbprefix']."people VALUES (
-				NULL, 
-				'".$c->real_escape_string($_POST['name'])."', 
-				'".$c->real_escape_string(json_encode($array))."',  
+				NULL,
+				'".$c->real_escape_string($_POST['name'])."',
+				'".$c->real_escape_string(json_encode($array))."',
 				'{}',
-				'".time()."',  
-				'".time()."' 
+				'".time()."',
+				'".time()."'
 			);";
 		}
 //var_dump($q);
@@ -340,7 +342,7 @@ function save() {
 /**
  * delete
  * Delete person
- * @param (integer) Person ID 
+ * @param (integer) Person ID
  */
 function delete($id) {
 	if (!isset($_SESSION['level']) OR strpos($_SESSION['level'], 'd')===-1) {
@@ -374,7 +376,7 @@ function delete($id) {
 /**
  * comment
  * Add a comment to the person
- * @param (integer) Person ID 
+ * @param (integer) Person ID
  */
 function comment($id) {
 	global $lang;
@@ -410,7 +412,7 @@ function comment($id) {
 /**
  * commentdelete
  * Delete comment
- * @param (integer) Comment ID 
+ * @param (integer) Comment ID
  */
 function commentdelete($id) {
 	if (!isset($_SESSION['level']) OR strpos($_SESSION['level'], 'd')===-1) {
@@ -426,10 +428,10 @@ function commentdelete($id) {
 				unset($person[0]['comments'][$key]);
 				break;
 			}
-		}		
+		}
 		// update person
-		$result = db("UPDATE ".$_SESSION['dbprefix']."people SET 
-			comments = '".$c->real_escape_string(json_encode($person[0]['comments']))."' 
+		$result = db("UPDATE ".$_SESSION['dbprefix']."people SET
+			comments = '".$c->real_escape_string(json_encode($person[0]['comments']))."'
 			WHERE  id = ".($person[0]['id']).";", $c);
 		if ($result) {
 			$response = json(array(
