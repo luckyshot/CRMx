@@ -69,7 +69,7 @@ Open <code>config.php</code> to modify the app settings:
 - Customize the <code>$form</code> array (see Form field types below for more info)
 - Add your <code>$users</code> and their permissions
 - If you are installing CRMx in a subdomain:
-  1. Modify the <code>option('base_uri', '/');</code> and add it there (for <code>example.com/crmx</code> it should be <code>option('base_uri', '/crmx');</code>)
+  1. Modify the <code>option('base_uri', '/');</code> and add it there (for <code>example.com/crmx/</code> it should be <code>option('base_uri', '/crmx/');</code>, note the trailing slash)
   2. Do the same in the <code>.htaccess</code> file, uncomment the <code>#</code> and add the subdomain (following the example above it will be <code>RewriteBase /crmx/</code>)
 - Open CRMx and type in your user's password. You can also bookmark <code>http://YOURCRMXPATH.com<b>/login/YOURPASSWORD</b></code> so that it autologins you every time.
 
