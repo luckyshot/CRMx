@@ -1,14 +1,14 @@
 /*
-	,o888888o.    8 888888888o.            ,8.       ,8.          `8.`8888.      ,8' 
-   8888     `88.  8 8888    `88.          ,888.     ,888.          `8.`8888.    ,8'  
-,8 8888       `8. 8 8888     `88         .`8888.   .`8888.          `8.`8888.  ,8'   
-88 8888           8 8888     ,88        ,8.`8888. ,8.`8888.          `8.`8888.,8'    
-88 8888           8 8888.   ,88'       ,8'8.`8888,8^8.`8888.          `8.`88888'     
-88 8888           8 888888888P'       ,8' `8.`8888' `8.`8888.         .88.`8888.     
-88 8888           8 8888`8b          ,8'   `8.`88'   `8.`8888.       .8'`8.`8888.    
-`8 8888       .8' 8 8888 `8b.       ,8'     `8.`'     `8.`8888.     .8'  `8.`8888.   
-   8888     ,88'  8 8888   `8b.    ,8'       `8        `8.`8888.   .8'    `8.`8888.  
-	`8888888P'    8 8888     `88. ,8'         `         `8.`8888. .8'      `8.`8888. 
+	,o888888o.    8 888888888o.            ,8.       ,8.          `8.`8888.      ,8'
+   8888     `88.  8 8888    `88.          ,888.     ,888.          `8.`8888.    ,8'
+,8 8888       `8. 8 8888     `88         .`8888.   .`8888.          `8.`8888.  ,8'
+88 8888           8 8888     ,88        ,8.`8888. ,8.`8888.          `8.`8888.,8'
+88 8888           8 8888.   ,88'       ,8'8.`8888,8^8.`8888.          `8.`88888'
+88 8888           8 888888888P'       ,8' `8.`8888' `8.`8888.         .88.`8888.
+88 8888           8 8888`8b          ,8'   `8.`88'   `8.`8888.       .8'`8.`8888.
+`8 8888       .8' 8 8888 `8b.       ,8'     `8.`'     `8.`8888.     .8'  `8.`8888.
+   8888     ,88'  8 8888   `8b.    ,8'       `8        `8.`8888.   .8'    `8.`8888.
+	`8888888P'    8 8888     `88. ,8'         `         `8.`8888. .8'      `8.`8888.
 
 Copyright (c) 2013 Xavi Esteve (MIT License)
 
@@ -138,10 +138,11 @@ var crmx = {
 		/**
 		 * load.people
 		 * Fill in people list
-		 * @params (object) 
+		 * @params (object)
 		 */
 		people: function(people) {"use strict";
 			$('#people-table>tbody').html('');
+			if ( !people.length ) { return null; }
 			crmx.sort(crmx.config.sort, people); // TODO: Optimize so it doesn't sort every time
 			for (var i in people) {
 
@@ -379,7 +380,7 @@ var crmx = {
 
 	/**
 	 * clearform
-	 * 
+	 *
 	 */
 	clearform: function() {"use strict";
 		$('#main input,#main select').val('');
@@ -392,15 +393,16 @@ var crmx = {
 
 	/**
 	 * sort
-	 * 
+	 *
 	 */
 	sort: function(column, data) {"use strict";
+		if ( !data.length ) { return null; }
 		function createSorter(column) {
 			return function (a,b) {
 				if (column==='name') {
 					var aVal = a[column], bVal = b[column];
 				}else{
-				 	var aVal = a.form[column], bVal = b.form[column];		
+				 	var aVal = a.form[column], bVal = b.form[column];
 				}
 
 				if(typeof aVal === 'string')
@@ -506,7 +508,7 @@ var crmx = {
 
 		// Top nav dropdown filters
 		$('.dropdown-menu').click(function(e){
-			var target = $(e.target).closest('li'); // the child that fired the original click		
+			var target = $(e.target).closest('li'); // the child that fired the original click
 			crmx.search(target.data('search'));
 			$('#s').val(target.data('search'));
 		});
