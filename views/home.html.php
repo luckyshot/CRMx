@@ -19,7 +19,7 @@
 				<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
 					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
 				</button>
-				<a class="brand" href="/"><?=$sitename?></a>
+				<a class="brand" href="?"><?=$sitename?></a>
 				<div class="nav-collapse collapse">
 					<p class="navbar-text pull-right">
 						<strong title="<?=$lang['loggedinas']?> <?=$username?>"><?=$username?></strong> <a href="/logout" class="navbar-link" title="<?=$lang['logout']?>"><i class="icon-lock"></i></a>
@@ -34,7 +34,7 @@
 							</form>
 						</li>
 						<li class="divider-vertical"></li>
-						<li><a href="/#top" title="<?=$lang['showall']?>" class="refresh"><i class="icon-refresh"></i></a></li>
+						<li><a href="#top" title="<?=$lang['showall']?>" class="refresh"><i class="icon-refresh"></i></a></li>
 					</ul>
 				</div><!--/.nav-collapse -->
 			</div>
@@ -86,7 +86,7 @@
 
 				<div id="main" class="row-fluid">
 					<div class="span6">
-					
+
 						<div id="form">
 							<!-- form fields go here -->
 						</div>
@@ -101,7 +101,7 @@
 
 						<div id="commentbox" class="hide">
 							<label><?=$lang['comments']?></label>
-							
+
 							<textarea id="c" class="span12" rows="3"></textarea>
 							<p><a href="#" id="c_button" class="btn pull-right"><?=$lang['commentadd']?></a></p>
 						</div>
@@ -144,7 +144,6 @@
 	<script src="js/bootstrap-collapse.js"></script>
 	<script src="js/bootstrap-dropdown.js"></script>
 	<script src="js/jquery-easydate.js"></script>
-	<script src="js/smoothscroll.js"></script>
 	<script src="js/crmx.js"></script>
 
 	<script>
@@ -155,7 +154,7 @@
 				username: '<?=$username?>',
 				plugins: <?=$plugins?>,
 				lang: <?=json_encode($lang)?>
-				
+
 			};
 			crmx.form = <?=$form?>;
 			crmx.people = <?=$people?>;
