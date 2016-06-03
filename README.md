@@ -68,6 +68,9 @@ Open <code>config.php</code> to modify the app settings:
 - Type in the MySQL user, password, server and prefix (There is no need to create the MySQL tables, these are created automatically)
 - Customize the <code>$form</code> array (see Form field types below for more info)
 - Add your <code>$users</code> and their permissions
+- If you are installing CRMx in a subdomain:
+  1. Modify the <code>option('base_uri', '/');</code> and add it there (for <code>example.com/crmx</code> it should be <code>option('base_uri', '/crmx');</code>)
+  2. Do the same in the <code>.htaccess</code> file, uncomment the <code>#</code> and add the subdomain (following the example above it will be <code>RewriteBase /crmx/</code>)
 - Open CRMx and type in your user's password. You can also bookmark <code>http://YOURCRMXPATH.com<b>/login/YOURPASSWORD</b></code> so that it autologins you every time.
 
 
@@ -359,7 +362,7 @@ The last step is to add the plugin name to the <code>$plugins</code> array in <c
 Multi-language
 ---------------
 
-In the <code>lang</code> folder, create a new language file (use <a href="http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes" target="_blank" rel="nofollow">ISO 639-1 codes</a>) or use an existing one. 
+In the <code>lang</code> folder, create a new language file (use <a href="http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes" target="_blank" rel="nofollow">ISO 639-1 codes</a>) or use an existing one.
 
 Then, add <code>'lang' => 'es-es',</code> in the <strong>user's configuration</strong>.
 
