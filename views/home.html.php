@@ -22,7 +22,7 @@
 				<a class="brand" href="?"><?=$sitename?></a>
 				<div class="nav-collapse collapse">
 					<p class="navbar-text pull-right">
-						<strong title="<?=$lang['loggedinas']?> <?=$username?>"><?=$username?></strong> <a href="/logout" class="navbar-link" title="<?=$lang['logout']?>"><i class="icon-lock"></i></a>
+						<strong title="<?=$lang['loggedinas']?> <?=$username?>"><?=$username?></strong> <a href="logout" class="navbar-link" title="<?=$lang['logout']?>"><i class="icon-lock"></i></a>
 					</p>
 					<ul class="nav">
 						<li>
