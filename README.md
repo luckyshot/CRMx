@@ -364,7 +364,7 @@ Multi-language
 
 In the <code>lang</code> folder, create a new language file (use <a href="http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes" target="_blank" rel="nofollow">ISO 639-1 codes</a>) or use an existing one.
 
-Then, add <code>'lang' => 'es-es',</code> in the <strong>user's configuration</strong>.
+Then, add <code>'lang' => 'es_es',</code> in the <strong>user's configuration</strong>.
 
 Alternatively, you can change <code>LANG_DEFAULT</code> so everyone will have the same language.
 
@@ -467,7 +467,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 Credits
 ---------------
 
-Author: <strong><a href="http://xaviesteve.com/" target="_blank">Xavi Esteve</a></strong> (<a href="http://twitter.com/xaviesteve" target="_blank" rel="nofollow">@xaviesteve</a>)
+Author: <strong><a href="https://xaviesteve.com/" target="_blank">Xavi Esteve</a></strong> (<a href="https://twitter.com/xaviesteve" target="_blank" rel="nofollow">@xaviesteve</a>)
 
 - Icons by <a href="http://glyphicons.com/" target="_blank" rel="nofollow">Glyphicons</a> (attribution)
 - <a href="http://twitter.github.com/bootstrap/" target="_blank" rel="nofollow">Twitter Bootstrap</a> by Twitter, Inc (Apache license)
