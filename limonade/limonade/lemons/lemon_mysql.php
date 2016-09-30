@@ -30,6 +30,7 @@
  */
 function db($sql,$c = null) {
 	$res = false;
+	$q = ( $c === null ) ? @mysqli_query( "SET NAMES 'utf8';" ) : @mysqli_query( $c, "SET NAMES 'utf8';" );
 	$q = ($c === null)?@mysqli_query($sql):@mysqli_query($c,$sql);
 
 	if($q) {
