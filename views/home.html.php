@@ -22,7 +22,7 @@
 				<a class="brand" href="?"><?=$sitename?></a>
 				<div class="nav-collapse collapse">
 					<p class="navbar-text pull-right">
-						<strong title="<?=$lang['loggedinas']?> <?=$username?>"><?=$username?></strong> <a href="logout" class="navbar-link" title="<?=$lang['logout']?>"><i class="icon-lock"></i></a>
+						<strong title="<?=$lang['loggedinas']?> <?=$username?>"><?=$username?></strong> <a href="logout" class="navbar-link" title="<?=$lang['logout']?>"><i class="icon-lock icon-white"></i></a>
 					</p>
 					<ul class="nav">
 						<li>
@@ -34,7 +34,7 @@
 							</form>
 						</li>
 						<li class="divider-vertical"></li>
-						<li><a href="#top" title="<?=$lang['showall']?>" class="refresh"><i class="icon-refresh"></i></a></li>
+						<li><a href="#top" title="<?=$lang['showall']?>" class="refresh"><i class="icon-refresh icon-white"></i></a></li>
 					</ul>
 				</div><!--/.nav-collapse -->
 			</div>
