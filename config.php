@@ -27,7 +27,7 @@ date_default_timezone_set('Europe/London');
 ini_set('session.gc_maxlifetime', 3600); // seconds (3600 = 1 hour)
 
 define("SITE_NAME", "CRMx"); // Default sitename when none specified in environments
-define("SITE_VERSION", "0.3.0");
+define("SITE_VERSION", "0.3.1");
 
 define("MYSQL_SERVER", "localhost");
 define("MYSQL_USER", "user");
