@@ -27,9 +27,9 @@
 					<ul class="nav">
 						<li>
 							<form class="navbar-form">
-								<a href="#top" class="btn" title="<?=$lang['viewtable']?>"><i class="icon-th"></i></a>
-								<a href="#main" class="btn" title="<?=$lang['viewdetails']?>"><i class="icon-user"></i></a>
-								<a href="#main" class="btn btn-primary clearform" title="<?=$lang['contactcreate']?>"><i class="icon-plus icon-white"></i></a>
+								<a href="#top" class="btn" title="<?=$lang['viewtable']?>"><i class="icon-th icon-white"></i></a>
+								<a href="#main" class="btn" title="<?=$lang['viewdetails']?>"><i class="icon-user icon-white"></i></a>
+								<a href="#main" class="btn btn-primary clearform" title="<?=$lang['contactcreate']?>"><i class="icon-plus"></i></a>
 								<input id="s" class="input-large search-query" type="text" placeholder="<?=$lang['searchplaceholder']?>&hellip;">
 							</form>
 						</li>
