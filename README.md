@@ -165,7 +165,7 @@ To skip a form field to show in the main table, set the <code>hidden</code> prop
 
 ### Deleting fields
 
-Note that if you remove a field from <code>config.php</code> it will still be in the database and will disappear when that person is updated. If you'd rather not loose any info, set <code>hidden = 1</code>.
+Note that if you remove a field from <code>config.php</code> it will still be in the database and will disappear when that person is updated. If you'd rather not loose any info, set <code>hidden = 1</code> instead of deleting it.
 
 REST API
 ---------------
