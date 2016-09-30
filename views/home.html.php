@@ -84,7 +84,7 @@
 				</div>
 
 
-				<div id="main" class="row-fluid">
+				<div class="row-fluid">
 					<div class="span6">
 
 						<div id="form">
