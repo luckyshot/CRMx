@@ -212,7 +212,7 @@ function search($s='') {
 		foreach ($w as &$wi) {
 			$wi = "(name LIKE  '%".$c->real_escape_string($wi)."%' OR form LIKE  '%".$c->real_escape_string($wi)."%' OR comments LIKE  '%".$c->real_escape_string($wi)."%') ";
 		}
-		$q = "SELECT id, name, form FROM ".$_SESSION['dbprefix']."people WHERE ". implode(' AND ', $w) ."  ORDER BY name ASC LIMIT 0, 50";
+		$q = "SELECT `id`, `name`, `form` FROM `".$_SESSION['dbprefix']."people` WHERE ". implode(' AND ', $w) ." ORDER BY `name` ASC LIMIT 0, 50";
 		$people = db($q, $c);
 
 		foreach($people as &$person) {
@@ -247,9 +247,9 @@ function get($detail) {
 	}else{
 		global $c;
 		if (is_numeric($detail)) {
-			$people = db("SELECT * FROM ".$_SESSION['dbprefix']."people WHERE id = ".$c->real_escape_string($detail)." LIMIT 1", $c);
+			$people = db("SELECT * FROM `".$_SESSION['dbprefix']."people` WHERE `id` = '".$c->real_escape_string($detail)."' LIMIT 1;", $c);
 		}else{
-			$people = db("SELECT * FROM ".$_SESSION['dbprefix']."people WHERE name LIKE '%".$c->real_escape_string($detail)."%' OR form LIKE '%".$c->real_escape_string($detail)."%' ORDER BY updated DESC LIMIT 1", $c);
+			$people = db("SELECT * FROM `".$_SESSION['dbprefix']."people` WHERE `name` LIKE '%".$c->real_escape_string($detail)."%' OR `form` LIKE '%".$c->real_escape_string($detail)."%' ORDER BY `updated` DESC LIMIT 1;", $c);
 		}
 		if ($people) {
 			$people = $people[0];
@@ -297,12 +297,12 @@ function save() {
 		}
 //var_dump($array);
 		if ($_POST['id']) { // update details
-			$q = "UPDATE ".$_SESSION['dbprefix']."people SET
-				form = '".$c->real_escape_string(json_encode($array))."',
-				name =  '".$c->real_escape_string($_POST['name'])."',
-				`updated` =  '".time()."' WHERE  id = ".($_POST['id']).";";
+			$q = "UPDATE `".$_SESSION['dbprefix']."people` SET
+				`form` = '".$c->real_escape_string(json_encode($array))."',
+				`name` = '".$c->real_escape_string($_POST['name'])."',
+				`updated` = '".time()."' WHERE `id` = '".$c->real_escape_string($_POST['id'])."';";
 		}else{ // create new
-			$q = "INSERT INTO ".$_SESSION['dbprefix']."people VALUES (
+			$q = "INSERT INTO `".$_SESSION['dbprefix']."people` VALUES (
 				NULL,
 				'".$c->real_escape_string($_POST['name'])."',
 				'".$c->real_escape_string(json_encode($array))."',
@@ -319,7 +319,7 @@ function save() {
 				$response = json(array('status'=>'success','message'=>'Contact details saved'));
 			}else{
 				// Get the ID
-				$q = "SELECT id from ".$_SESSION['dbprefix']."people ORDER BY id DESC LIMIT 1";
+				$q = "SELECT `id` FROM `".$_SESSION['dbprefix']."people` ORDER BY `id` DESC LIMIT 1;";
 				$id = db($q, $c);
 				$response = json(array('id'=>$id[0]['id'],'status'=>'success','message'=>'New contact created'));
 			}
@@ -348,7 +348,7 @@ function delete($id) {
 		$response = json(array('status'=>'error','message'=>"Your user cannot delete"));
 	}else{
 		global $c;
-		$deletion = db("DELETE FROM ".$_SESSION['dbprefix']."people WHERE id = ".$c->real_escape_string($id)."", $c);
+		$deletion = db("DELETE FROM `".$_SESSION['dbprefix']."people` WHERE `id` = '".$c->real_escape_string($id)."';", $c);
 
 		if ($deletion) {
 			$response = json(array('status'=>'success','message'=>'Contact deleted'));
@@ -386,7 +386,7 @@ function comment($id) {
 		json(array('status'=>'error','message'=>$lang['writecommentfirst']));
 	}else{
 		global $c;
-		$comments = db("SELECT comments FROM ".$_SESSION['dbprefix']."people WHERE id = ".$c->real_escape_string($_POST['id'])."", $c);
+		$comments = db("SELECT `comments` FROM `".$_SESSION['dbprefix']."people` WHERE id = '".$c->real_escape_string($_POST['id'])."';", $c);
 		$comments = json_decode($comments[0]['comments'], true);
 //var_dump($comments);
 		array_unshift($comments, array(
@@ -395,7 +395,7 @@ function comment($id) {
 			'date' => date('c', time()), // iso 8601 format
 			'text' => $_POST['comment']
 		));
-		$q = "UPDATE ".$_SESSION['dbprefix']."people SET comments = '".$c->real_escape_string(json_encode($comments))."' WHERE id = ".$c->real_escape_string($_POST['id'])."";
+		$q = "UPDATE `".$_SESSION['dbprefix']."people` SET `comments` = '".$c->real_escape_string(json_encode($comments))."' WHERE `id` = '".$c->real_escape_string($_POST['id'])."';";
 		$result = db($q, $c);
 
 		if ($result) {
@@ -419,7 +419,7 @@ function commentdelete($id) {
 	}else{
 		global $c;
 		// load comments from person
-		$person = db("SELECT id,comments FROM ".$_SESSION['dbprefix']."people WHERE comments LIKE '%".$c->real_escape_string($id)."%' ORDER BY updated DESC LIMIT 1", $c);
+		$person = db("SELECT `id`, `comments` FROM `".$_SESSION['dbprefix']."people` WHERE `comments` LIKE '%".$c->real_escape_string($id)."%' ORDER BY `updated` DESC LIMIT 1;", $c);
 		$person[0]['comments'] = json_decode($person[0]['comments'], true);
 		// remove from array
 		foreach($person[0]['comments'] as $key => $comment) {
@@ -429,9 +429,9 @@ function commentdelete($id) {
 			}
 		}
 		// update person
-		$result = db("UPDATE ".$_SESSION['dbprefix']."people SET
-			comments = '".$c->real_escape_string(json_encode($person[0]['comments']))."'
-			WHERE  id = ".($person[0]['id']).";", $c);
+		$result = db("UPDATE `".$_SESSION['dbprefix']."people` SET
+			`comments` = '".$c->real_escape_string(json_encode($person[0]['comments']))."'
+			WHERE `id` = '".($person[0]['id'])."';", $c);
 		if ($result) {
 			$response = json(array(
 				'status'=>'success',
