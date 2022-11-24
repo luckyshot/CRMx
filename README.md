@@ -475,4 +475,4 @@ Author: <strong><a href="https://xaviesteve.com/" target="_blank">Xavi Esteve</a
 - <a href="http://limonade-php.github.com/" target="_blank" rel="nofollow">Limonade PHP micro framework</a> by Fabrice Luraine (MIT license)
 - <a href="http://easydate.parshap.com/" target="_blank" rel="nofollow">EasyDate</a> by Parsha Pourkhomami (MIT license)
 - <a href="https://github.com/bryanwoods/autolink-js" target="_blank" rel="nofollow">AutoLink</a> by Bryan Woods (open sourced)
-
+- <a href="https://github.com/Cr4ckC4t" target="_blank" rel="nofollow">crackcat</a> for his <a href="https://github.com/luckyshot/CRMx/commit/8c62d274986137d6a1d06958a6f75c3553f45f8f">security audit</a> and help fixing them
