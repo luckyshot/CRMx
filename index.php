@@ -173,7 +173,7 @@ function api ($pass, $action, $detail) {
  */
 function home() {
 	global $lang;
-	if (!isset($_SESSION['level']) OR strpos($_SESSION['level'], 'r')===-1) {
+	if (!isset($_SESSION['level']) OR strpos($_SESSION['level'], 'r')===false) {
 		die('<!doctype html><html><body style="font-family: \'Helvetica Neue\',Helvetica,Arial,sans-serif;"><h1 style="font-weight:100;">'.$lang['notloggedin'].'</h1></body></html>');
 	}else{
 		global $form, $plugins;
@@ -203,7 +203,7 @@ function home() {
  * @param (string) Pass a string to search or empty for all results
  */
 function search($s='') {
-	if (!isset($_SESSION['level']) OR strpos($_SESSION['level'], 'r')===-1) {
+	if (!isset($_SESSION['level']) OR strpos($_SESSION['level'], 'r')===false) {
 		$response = array('status'=>'error','message'=>"Your user cannot search contacts");
 	}else{
 		global $c;
@@ -242,7 +242,7 @@ function search($s='') {
  * @param (integer/string) Pass either person's ID or a search with just one result
  */
 function get($detail) {
-	if (!isset($_SESSION['level']) OR strpos($_SESSION['level'], 'r')===-1) {
+	if (!isset($_SESSION['level']) OR strpos($_SESSION['level'], 'r')===false) {
 		$response = array('status'=>'error','message'=>"Your user cannot read");
 	}else{
 		global $c;
@@ -279,7 +279,7 @@ function get($detail) {
  */
 function save() {
 	// Check if user has enough level to Save
-	if (!isset($_SESSION['level']) OR strpos($_SESSION['level'], 's')===-1) {
+	if (!isset($_SESSION['level']) OR strpos($_SESSION['level'], 's')===false) {
 		$response = json(array('status'=>'error','message'=>'Your user cannot save'));
 
 	// User can Save
@@ -344,7 +344,7 @@ function save() {
  * @param (integer) Person ID
  */
 function delete($id) {
-	if (!isset($_SESSION['level']) OR strpos($_SESSION['level'], 'd')===-1) {
+	if (!isset($_SESSION['level']) OR strpos($_SESSION['level'], 'd')===false) {
 		$response = json(array('status'=>'error','message'=>"Your user cannot delete"));
 	}else{
 		global $c;
@@ -380,7 +380,7 @@ function delete($id) {
 function comment($id) {
 	global $lang;
 	// Check if user has enough level to Comment
-	if (!isset($_SESSION['level']) OR strpos($_SESSION['level'], 'c')===-1) {
+	if (!isset($_SESSION['level']) OR strpos($_SESSION['level'], 'c')===false) {
 		$response = json(array('status'=>'error','message'=>'Your user cannot comment'));
 	}else if (!isset($_POST['comment']) OR $_POST['comment']=='') {
 		json(array('status'=>'error','message'=>$lang['writecommentfirst']));
@@ -414,7 +414,7 @@ function comment($id) {
  * @param (integer) Comment ID
  */
 function commentdelete($id) {
-	if (!isset($_SESSION['level']) OR strpos($_SESSION['level'], 'd')===-1) {
+	if (!isset($_SESSION['level']) OR strpos($_SESSION['level'], 'd')===false) {
 		$response = json(array('status'=>'error','message'=>"Your user cannot delete comments"));
 	}else{
 		global $c;
